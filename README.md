@@ -13,4 +13,4 @@ The project was done in Java in IDE Eclipse.
 It is the most easy to download and import it.
 
 ## Licence
-License in the file [LICENCE.md](https://github.com/BogdanPasterak/reportJUnitJava/master/LICENCE.md)
+License in the file [LICENCE.md](https://github.com/BogdanPasterak/reportJUnitJava/blob/master/LICENCE.md)
