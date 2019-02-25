@@ -22,6 +22,7 @@ public class Program extends JFrame implements ActionListener {
 	JMenuItem load;
 	JFileChooser fileChooser;
 	FileNameExtensionFilter fileFilter;
+	File currentFile;
 	JLabel label;
 	
 
@@ -53,6 +54,7 @@ public class Program extends JFrame implements ActionListener {
 		fileFilter = new FileNameExtensionFilter("XML Files", "xml");
 		fileChooser.addChoosableFileFilter(fileFilter);
 		fileChooser.setAcceptAllFileFilterUsed(false);
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		
 		
 		
@@ -79,11 +81,11 @@ public class Program extends JFrame implements ActionListener {
 		if (e.getSource() == load){
 			Integer returnVal = fileChooser.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            File file = fileChooser.getSelectedFile();
+				currentFile = fileChooser.getSelectedFile();
 	            //This is where a real application would open the file.
-	            label.setText("Laduje " + file.toString());
+	            this.setTitle("Report viewer : " + currentFile.getName());
 	        } else {
-	            label.setText("Error");
+	            this.setTitle("Report viewer");
 	        }
 			
 		}
