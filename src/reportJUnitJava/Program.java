@@ -16,6 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.json.JSONObject;
+
 public class Program extends JFrame implements ActionListener {
 	JMenuBar menuBar;
 	JMenu file;
@@ -24,6 +26,7 @@ public class Program extends JFrame implements ActionListener {
 	FileNameExtensionFilter fileFilter;
 	File currentFile;
 	JLabel label;
+	JSONObject jo;
 	
 
 	public Program() {
@@ -84,6 +87,8 @@ public class Program extends JFrame implements ActionListener {
 				currentFile = fileChooser.getSelectedFile();
 	            //This is where a real application would open the file.
 	            this.setTitle("Report viewer : " + currentFile.getName());
+	            jo = ConvertXmlToJson.convert(currentFile);
+	            label.setText(jo.toString());
 	        } else {
 	            this.setTitle("Report viewer");
 	        }

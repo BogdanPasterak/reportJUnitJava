@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AllTests" project="POPAssignment" tests="68" started="68" failures="0" errors="0" ignored="1">
+  <testsuite name="differentCoatTest.AllTests" time="0.041">
+    <testsuite name="differentCoatTest.CustomerCreateTest" time="0.001">
+      <testcase name="testCreateNewCustomerFrom10" classname="differentCoatTest.CustomerCreateTest" time="0.0"/>
+      <testcase name="testCreateNewCustomer" classname="differentCoatTest.CustomerCreateTest" time="0.0" ignored="true"/>
+    </testsuite>
+    <testsuite name="differentCoatTest.CustomerGetterSetterTest" time="0.0">
+      <testcase name="testSetNameWithTab" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetPhone" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testSetPhoneWithTab" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetName" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetPaintCans" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetNewCustomerNumberData" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetNewCustomerWrongOrder" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetNewCustomerNumberDataOver" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetNewCustomerNumberDataTrim" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetNewCustomerBadInt2" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testSetPaintCans" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testSetName" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testToSave" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testGetNewCustomerBadInt" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+      <testcase name="testSetPhone" classname="differentCoatTest.CustomerGetterSetterTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="differentCoatTest.CustomerToStringTest" time="0.0">
+      <testcase name="testToString" classname="differentCoatTest.CustomerToStringTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="differentCoatTest.PaintRequiredCalculatorTest" time="0.012">
+      <testcase name="numberOfCansTestEquals14" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.011"/>
+      <testcase name="numberOfCansTestEquals28" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.0"/>
+      <testcase name="numberOfCansTest0" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.0"/>
+      <testcase name="numberOfCansTest128_64" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.0"/>
+      <testcase name="numberOfCansTestMinus74_2" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.0"/>
+      <testcase name="numberOfCansTestLess14" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.0"/>
+      <testcase name="numberOfCansTestLess28" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.0"/>
+      <testcase name="numberOfCansTestMore14" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.001"/>
+      <testcase name="numberOfCansTestMore28" classname="differentCoatTest.PaintRequiredCalculatorTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="differentCoatTest.SurfaceCalculatorTest" time="0.018">
+      <testcase name="testSquareRoomH2_4S3_22" classname="differentCoatTest.SurfaceCalculatorTest" time="0.017"/>
+      <testcase name="testSquareRoomH2_77S3" classname="differentCoatTest.SurfaceCalculatorTest" time="0.0"/>
+      <testcase name="testSquareRoomH2S3" classname="differentCoatTest.SurfaceCalculatorTest" time="0.0"/>
+      <testcase name="testCylindricaRoomH2_8D3" classname="differentCoatTest.SurfaceCalculatorTest" time="0.0"/>
+      <testcase name="testRectangularRoomH2_8L3_5W4_2" classname="differentCoatTest.SurfaceCalculatorTest" time="0.0"/>
+      <testcase name="testRectangularRoomH2L3W4" classname="differentCoatTest.SurfaceCalculatorTest" time="0.0"/>
+      <testcase name="testCylindricaRoomH2D2" classname="differentCoatTest.SurfaceCalculatorTest" time="0.001"/>
+      <testcase name="testSquareRoomH2S5_3" classname="differentCoatTest.SurfaceCalculatorTest" time="0.0"/>
+      <testcase name="testCylindricaRoomH2_8D2_2" classname="differentCoatTest.SurfaceCalculatorTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="differentCoatTest.ValidatePhoneNoTest" time="0.007">
+      <testcase name="testFalse15" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testFalse16" classname="differentCoatTest.ValidatePhoneNoTest" time="0.001"/>
+      <testcase name="testFalse17" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testFalse18" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testFalse19" classname="differentCoatTest.ValidatePhoneNoTest" time="0.001"/>
+      <testcase name="testFalse20" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testFalse21" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testFalse22" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testFalse23" classname="differentCoatTest.ValidatePhoneNoTest" time="0.001"/>
+      <testcase name="testFalse24" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testFalse25" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue01" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue02" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue03" classname="differentCoatTest.ValidatePhoneNoTest" time="0.001"/>
+      <testcase name="testTrue04" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue05" classname="differentCoatTest.ValidatePhoneNoTest" time="0.001"/>
+      <testcase name="testTrue06" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue07" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue08" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue09" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue10" classname="differentCoatTest.ValidatePhoneNoTest" time="0.001"/>
+      <testcase name="testTrue11" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue12" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue13" classname="differentCoatTest.ValidatePhoneNoTest" time="0.0"/>
+      <testcase name="testTrue14" classname="differentCoatTest.ValidatePhoneNoTest" time="0.001"/>
+    </testsuite>
+    <testsuite name="differentCoatTest.FormatPhoneNoTest" time="0.003">
+      <testcase name="test1" classname="differentCoatTest.FormatPhoneNoTest" time="0.0"/>
+      <testcase name="test2" classname="differentCoatTest.FormatPhoneNoTest" time="0.0"/>
+      <testcase name="test3" classname="differentCoatTest.FormatPhoneNoTest" time="0.0"/>
+      <testcase name="test4" classname="differentCoatTest.FormatPhoneNoTest" time="0.001"/>
+      <testcase name="test5" classname="differentCoatTest.FormatPhoneNoTest" time="0.0"/>
+      <testcase name="test6" classname="differentCoatTest.FormatPhoneNoTest" time="0.0"/>
+      <testcase name="test7" classname="differentCoatTest.FormatPhoneNoTest" time="0.002"/>
+    </testsuite>
+  </testsuite>
+</testrun>
