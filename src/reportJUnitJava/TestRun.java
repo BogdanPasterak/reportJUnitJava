@@ -32,7 +32,7 @@ public class TestRun {
 			for (String key : JSONObject.getNames(jod)) {
 				switch (key) {
 				case "testsuite":
-					testsuite = new TestSuite();	//jod.getString("project");
+					testsuite = new TestSuite(jod.getJSONObject("testsuite"));
 					break;
 				case "name":
 					name = jod.getString(key);		break;

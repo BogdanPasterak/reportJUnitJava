@@ -27,6 +27,7 @@ public class Program extends JFrame implements ActionListener {
 	File currentFile;
 	JLabel label;
 	JSONObject jo;
+	TestRun testRun;
 	
 
 	public Program() {
@@ -87,7 +88,9 @@ public class Program extends JFrame implements ActionListener {
 	            //This is where a real application would open the file.
 	            this.setTitle("Report viewer : " + currentFile.getName());
 	            jo = ConvertXmlToJson.convert(currentFile);
-	            label.setText(jo.toString());
+	            if (jo.has("testrun"))
+	            	testRun = new TestRun(jo);
+	            label.setText(testRun.testsuite.name);
 	        } else {
 	            this.setTitle("Report viewer");
 	        }
