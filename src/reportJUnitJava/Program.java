@@ -5,9 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -19,6 +17,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.json.JSONObject;
 
 public class Program extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
 	JMenuBar menuBar;
 	JMenu file;
 	JMenuItem load;
@@ -30,7 +30,6 @@ public class Program extends JFrame implements ActionListener {
 	
 
 	public Program() {
-
 		init();
 	}
 
