@@ -1,5 +1,6 @@
 package reportJUnitJava;
 
+import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,73 +13,82 @@ public class TestRun {
 	Integer errors;
 	Integer ignored;
 	TestSuite testsuite;
-	TestUndefined undefined;
+	ArrayList<Object> undefined;
 
-	public TestRun(JSONObject jo) {
+	public TestRun(JSONObject jo) throws ReportJUnitException, JSONException {
 		// checking the correctness of the object
-		if (jo == null || ! jo.has("testrun"))
-			try {
-				throw new Exception("Inproper JSON Object");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (jo == null || !jo.has("testrun"))
+			throw new ReportJUnitException("Inproper JSON Object");
+		// get dependency
+		JSONObject jod = jo.getJSONObject("testrun");
+		// matching keys and values to variables
+		// all names in JSON
+		for (String key : JSONObject.getNames(jod)) {
+			switch (key) {
+			case "testsuite":
+				testsuite = new TestSuite(jod.getJSONObject(key), 1);
+				break;
+			case "name":
+				name = jod.getString(key);
+				break;
+			case "project":
+				project = jod.getString(key);
+				break;
+			case "tests":
+				tests = jod.getInt(key);
+				break;
+			case "started":
+				started = jod.getInt(key);
+				break;
+			case "failures":
+				failures = jod.getInt(key);
+				break;
+			case "errors":
+				errors = jod.getInt(key);
+				break;
+			case "ignored":
+				ignored = jod.getInt(key);
+				break;
+			default:
+				if (undefined == null)
+					undefined = new ArrayList<>();
+				undefined.add(jod.get(key));
+				break;
 			}
-		
-		try {
-			// get dependency
-			JSONObject jod = jo.getJSONObject("testrun");
-			// matching keys and values ​​to variables
-			// all names in JSON
-			for (String key : JSONObject.getNames(jod)) {
-				switch (key) {
-				case "testsuite":
-					testsuite = new TestSuite(jod.getJSONObject("testsuite"));
-					break;
-				case "name":
-					name = jod.getString(key);		break;
-				case "project":
-					project = jod.getString(key);	break;
-				case "tests":
-					tests = jod.getInt(key);		break;
-				case "started":
-					started = jod.getInt(key);		break;
-				case "failures":
-					failures = jod.getInt(key);		break;
-				case "errors":
-					errors = jod.getInt(key);		break;
-				case "ignored":
-					ignored = jod.getInt(key);		break;
-				default:
-					if (undefined == null)
-						undefined = new TestUndefined();
-					undefined.add(jod.get(key));
-					break;
-				}
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		
-	}
 
-	private String withNull(Object s) {
-		if (s == null)
-			return "\n";
-		return s.toString() + "\n";
 	}
 
 	@Override
 	public String toString() {
+		String s = "TestRun Object:";
+		if (name != null)
+			s += "\n Name: " + name;
+		if (project != null)
+			s += "\n Project: " + project;
+		if (tests != null)
+			s += "\n Tests: " + tests;
+		if (started != null)
+			s += "\n Started: " + started;
+		if (failures != null)
+			s += "\n Failures: " + failures;
+		if (errors != null)
+			s += "\n Errors: " + errors;
+		if (ignored != null)
+			s += "\n Ignored: " + ignored;
+		if (testsuite != null)
+			s += "\n" + testsuite;
+		if (undefined != null) {
+			s += "\n Undefined size: " + undefined.size();
+			for (Object object : undefined) {
+				s += "\n  Object: ";
+				if (object.toString().length() > 31)
+					s += object.toString().substring(0, 30);
+				else
+					s += object.toString();
+			}
+		}
 
-		return "TestRun Object:\n" + "Name: " + withNull(name) + "Project: " + withNull(project) + "Tests: "
-				+ withNull(tests) + "Started: " + withNull(started) + "Failures: " + withNull(failures) + "Errors: "
-				+ withNull(errors) + "Ignored: " + withNull(ignored) + "TestSuite: " + withNull(testsuite)
-				+ "Undefined: " + withNull(undefined);
+		return s;
 	}
-
-
 }

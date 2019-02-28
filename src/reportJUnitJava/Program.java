@@ -1,5 +1,6 @@
 package reportJUnitJava;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Program extends JFrame implements ActionListener {
@@ -87,12 +89,15 @@ public class Program extends JFrame implements ActionListener {
 				currentFile = fileChooser.getSelectedFile();
 	            //This is where a real application would open the file.
 	            this.setTitle("Report viewer : " + currentFile.getName());
-	            jo = ConvertXmlToJson.convert(currentFile);
-	            if (jo.has("testrun"))
-	            	testRun = new TestRun(jo);
-	            label.setText(testRun.testsuite.name);
-	        } else {
-	            this.setTitle("Report viewer");
+				jo = ConvertXmlToJson.convert(currentFile);
+				try {
+					testRun = new TestRun(jo);
+					System.out.println(testRun.toString());
+				} catch (ReportJUnitException | JSONException | NullPointerException e1) {
+					this.setTitle("Report viewer");
+					label.setForeground(Color.RED);
+					label.setText("Error: " + e1.getMessage());
+				}
 	        }
 			
 		}
