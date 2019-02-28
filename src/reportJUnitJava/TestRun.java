@@ -82,8 +82,8 @@ public class TestRun {
 			s += "\n Undefined size: " + undefined.size();
 			for (Object object : undefined) {
 				s += "\n  Object: ";
-				if (object.toString().length() > 31)
-					s += object.toString().substring(0, 30);
+				if (object.toString().length() > 61)
+					s += object.toString().substring(0, 60);
 				else
 					s += object.toString();
 			}
