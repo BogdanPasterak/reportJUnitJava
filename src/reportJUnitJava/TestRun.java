@@ -12,7 +12,7 @@ public class TestRun {
 	Integer failures;
 	Integer errors;
 	Integer ignored;
-	TestSuite testsuite;
+	TestSuite testSuite;
 	ArrayList<Object> undefined;
 
 	public TestRun(JSONObject jo) throws ReportJUnitException, JSONException {
@@ -26,7 +26,7 @@ public class TestRun {
 		for (String key : JSONObject.getNames(jod)) {
 			switch (key) {
 			case "testsuite":
-				testsuite = new TestSuite(jod.getJSONObject(key), 1);
+				testSuite = new TestSuite(jod.getJSONObject(key), 1);
 				break;
 			case "name":
 				name = jod.getString(key);
@@ -56,7 +56,10 @@ public class TestRun {
 				break;
 			}
 		}
-
+	}
+	
+	public TestSuite getTestSuite() {
+		return testSuite;
 	}
 
 	@Override
@@ -76,8 +79,8 @@ public class TestRun {
 			s += "\n Errors: " + errors;
 		if (ignored != null)
 			s += "\n Ignored: " + ignored;
-		if (testsuite != null)
-			s += "\n" + testsuite;
+		if (testSuite != null)
+			s += "\n" + testSuite;
 		if (undefined != null) {
 			s += "\n Undefined size: " + undefined.size();
 			for (Object object : undefined) {
@@ -91,4 +94,5 @@ public class TestRun {
 
 		return s;
 	}
+
 }

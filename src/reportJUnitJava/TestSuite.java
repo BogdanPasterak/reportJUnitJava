@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TestSuite {
-	int level;
+	private int level;
 	String name;
 	Double time;
 	ArrayList<TestSuite> testSuites;
@@ -66,6 +66,10 @@ public class TestSuite {
 		}
 	}
 	
+	public int getLevel() {
+		return level;
+	}
+
 	@Override
 	public String toString() {
 		String offset = "";

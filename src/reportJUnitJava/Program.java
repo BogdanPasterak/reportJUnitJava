@@ -51,9 +51,10 @@ public class Program extends JFrame implements ActionListener {
 	private void init() {
 		setTitle("Report viewer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(800, 500));
+		setMinimumSize(new Dimension(200, 100));
 		container = getContentPane();
-		container.setLayout(new FlowLayout());
+		//container.setPreferredSize(new Dimension(800, 500));
+		container.setLayout(new MyLayout());
 		// Menu
 		menuBar = new JMenuBar();
 		file = new JMenu("File");
@@ -109,7 +110,6 @@ public class Program extends JFrame implements ActionListener {
 					testRun = new TestRun(jo);
 					// System.out.println(testRun.toString());
 					testPanel = new TestPanel(testRun, container);
-					container.add(testPanel);
 					//testPanel.repaint();
 					pack();
 				} catch (ReportJUnitException | JSONException | NullPointerException e1) {
