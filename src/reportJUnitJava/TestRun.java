@@ -5,15 +5,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TestRun {
-	String name;
-	String project;
-	Integer tests;
-	Integer started;
-	Integer failures;
-	Integer errors;
-	Integer ignored;
-	TestSuite testSuite;
-	ArrayList<Object> undefined;
+	private String name;
+	private String project;
+	private Integer tests;
+	private Integer started;
+	private Integer failures;
+	private Integer errors;
+	private Integer ignored;
+	private TestSuite testSuite;
+	private ArrayList<Object> undefined;
 
 	public TestRun(JSONObject jo) throws ReportJUnitException, JSONException {
 		// checking the correctness of the object
@@ -60,6 +60,38 @@ public class TestRun {
 	
 	public TestSuite getTestSuite() {
 		return testSuite;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getProject() {
+		return project;
+	}
+
+	public Integer getTests() {
+		return tests;
+	}
+
+	public Integer getStarted() {
+		return started;
+	}
+
+	public Integer getFailures() {
+		return failures;
+	}
+
+	public Integer getErrors() {
+		return errors;
+	}
+
+	public Integer getIgnored() {
+		return ignored;
+	}
+
+	public ArrayList<Object> getUndefined() {
+		return undefined;
 	}
 
 	@Override

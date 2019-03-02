@@ -7,14 +7,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TestCase {
-	int level;
-	String name;
-	String classname;
-	Double time;
-	Boolean ignored;
-	String error;
-	String failure;
-	ArrayList<Object> undefined;
+	private int level;
+	private String name;
+	private String classname;
+	private Double time;
+	private Boolean ignored;
+	private String error;
+	private String failure;
+	private ArrayList<Object> undefined;
 
 	public TestCase(JSONObject jo, int level) throws JSONException {
 		this.level = level;
@@ -65,6 +65,38 @@ public class TestCase {
 		}
 	}
 	
+	public int getLevel() {
+		return level;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getClassname() {
+		return classname;
+	}
+
+	public Double getTime() {
+		return time;
+	}
+
+	public Boolean getIgnored() {
+		return ignored;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public String getFailure() {
+		return failure;
+	}
+
+	public ArrayList<Object> getUndefined() {
+		return undefined;
+	}
+
 	@Override
 	public String toString() {
 		String offset = "";

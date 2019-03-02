@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 public class TestSuite {
 	private int level;
-	String name;
-	Double time;
-	ArrayList<TestSuite> testSuites;
-	ArrayList<TestCase> testCases;
-	ArrayList<Object> undefined;
+	private String name;
+	private Double time;
+	private ArrayList<TestSuite> testSuites;
+	private ArrayList<TestCase> testCases;
+	private ArrayList<Object> undefined;
 	
 	public TestSuite(JSONObject jo, int level) throws JSONException {
 		this.level = level;
@@ -68,6 +68,26 @@ public class TestSuite {
 	
 	public int getLevel() {
 		return level;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Double getTime() {
+		return time;
+	}
+
+	public ArrayList<TestSuite> getTestSuites() {
+		return testSuites;
+	}
+
+	public ArrayList<TestCase> getTestCases() {
+		return testCases;
+	}
+
+	public ArrayList<Object> getUndefined() {
+		return undefined;
 	}
 
 	@Override

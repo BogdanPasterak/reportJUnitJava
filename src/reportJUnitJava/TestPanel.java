@@ -22,42 +22,45 @@ public class TestPanel extends JPanel {
 	private TestRun testRun;
 	private ArrayList<TestSuite> testSuites;
 	private ArrayList<TestCase> testCases;
-	private JLabel line1, line2;
-	private static final String STARTH2 = "<html><h2>Name: <em>";
-	private static final String STOPH2 = "</em></h2></html>";
 	
 	public TestPanel(TestRun testRun, Container parent) {
 		
 		indent = 0;
 		this.testRun = testRun;
-		this.setLayout(new BorderLayout());
-		this.setBorder(BorderFactory.createRaisedBevelBorder());
-		
-		this.testRun = testRun;
-		line1 = new JLabel(STARTH2 + testRun.name + STOPH2);
-		add(line1, BorderLayout.CENTER);
-		line2 = new JLabel("Project: " + testRun.project);
-		add(line2, BorderLayout.NORTH);
+		buildPanel(testRun.getName(), "Project: " + testRun.getProject());
+
 		parent.add(this);
-		parent.add(new TestPanel(testRun.getTestSuite(), parent));
 		
-		//repaint();
-		//setMaximumSize(new Dimension(300,getHeight()));
+		new TestPanel(testRun.getTestSuite(), parent);
+		
 	}
 	
 	public TestPanel(TestSuite testSuite, Container parent) {
 		indent = testSuite.getLevel();
 		testSuites = new ArrayList<>();
 		testSuites.add(testSuite);
-		this.setLayout(new BorderLayout());
-		this.setBorder(BorderFactory.createRaisedBevelBorder());
+		buildPanel(testSuite.getName(), null);
 		
-		line1 = new JLabel(STARTH2 + testSuite.name + STOPH2);
-		add(line1, BorderLayout.CENTER);
-		line2 = new JLabel("Time: " + testSuite.time.toString());
-		add(line2, BorderLayout.NORTH);
+		parent.add(this);
+		
+		if (testSuite.getTestSuites() != null) {
+			for (TestSuite testS : testSuite.getTestSuites()) {
+				new TestPanel(testS, parent);
+			}
+		}
+		
 		
 	}
+	 private void buildPanel(String title, String smalLine) {
+
+		 this.setLayout(new BorderLayout());
+		 this.setBorder(BorderFactory.createRaisedBevelBorder());
+
+		 this.add(new JLabel("<html><h2>Name: <em>" + title + "</em></h2></html>"), BorderLayout.NORTH);
+		 if (smalLine != null)
+			 this.add(new JLabel(smalLine), BorderLayout.CENTER);
+		 
+	 }
 	
 	public int getIndent(){
 		return indent;
