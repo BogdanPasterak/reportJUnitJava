@@ -25,6 +25,7 @@ import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument.Content;
+import javax.xml.bind.Unmarshaller.Listener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,6 +66,7 @@ public class Program extends JFrame implements ActionListener {
 		load.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
 		load.addActionListener(this);
 		file.add(load);
+		
 
 		this.setJMenuBar(menuBar);
 
@@ -73,7 +75,10 @@ public class Program extends JFrame implements ActionListener {
 		fileChooser.addChoosableFileFilter(fileFilter);
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-
+		currentFile = fileChooser.getSelectedFile();
+		
+		actionPerformed(new ActionEvent(load, 0, ""));
+		
 		//label = new JLabel("to");
 		//label.setBounds(0, 0, 580, 20);
 		// label.setMinimumSize(new Dimension(WIDTH, 20) );
