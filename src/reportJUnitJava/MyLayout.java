@@ -47,15 +47,14 @@ public class MyLayout implements LayoutManager{
                 d = c.getPreferredSize();
 
                 if (i > 0) {
-                    preferredWidth += d.width/2;
+                    preferredWidth += d.width/3;
                     preferredHeight += vgap;
                 } else {
                     preferredWidth = d.width;
                 }
                 preferredHeight += d.height;
 
-                minWidth = Math.max(c.getMinimumSize().width,
-                                    minWidth);
+                minWidth = Math.max(c.getMinimumSize().width, minWidth);
                 minHeight = preferredHeight;
             }
         }
@@ -105,10 +104,6 @@ public class MyLayout implements LayoutManager{
         int previousHeight = 0;
         int y = insets.top, xOffset, quotient;
 
-        // Go through the components' sizes, if neither
-        // preferredLayoutSize nor minimumLayoutSize has
-        // been called.
-        
         
         if (sizeUnknown) {
             setSizes(parent);

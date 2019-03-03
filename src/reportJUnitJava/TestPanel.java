@@ -21,7 +21,7 @@ public class TestPanel extends JPanel {
 	private int indent;
 	private TestRun testRun;
 	private ArrayList<TestSuite> testSuites;
-	private ArrayList<TestCase> testCases;
+	private TestCase testCase;
 	
 	public TestPanel(TestRun testRun, Container parent) {
 		
@@ -47,10 +47,23 @@ public class TestPanel extends JPanel {
 			for (TestSuite testS : testSuite.getTestSuites()) {
 				new TestPanel(testS, parent);
 			}
+		} else if (testSuite.getTestCases() != null) {
+			for (TestCase testC : testSuite.getTestCases()) {
+				new TestPanel(testC, parent);
+			}
 		}
+			
+	}
+	
+	public TestPanel(TestCase testCase, Container parent) {
+		indent = testCase.getLevel();
+		this.testCase = testCase;
+		buildPanel(testCase.getName(), testCase.getClassname());
 		
+		parent.add(this);
 		
 	}
+	
 	 private void buildPanel(String title, String smalLine) {
 
 		 this.setLayout(new BorderLayout());

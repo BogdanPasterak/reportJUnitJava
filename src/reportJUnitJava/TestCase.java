@@ -23,21 +23,6 @@ public class TestCase {
 //		JSONArray ja;
 		for (String key : JSONObject.getNames(jo)) {
 			switch (key) {
-//			case "testsuite":
-//				testSuites = new ArrayList<>();
-//				if (jo.get(key) instanceof JSONArray) {
-//					ja = jo.getJSONArray(key);
-//					for (int i = 0; i < ja.length(); i++) {
-//						testSuites.add(new TestSuite(ja.getJSONObject(i), level + 1));
-//					}
-//				} else if (jo.get(key) instanceof JSONObject) {
-//					testSuites.add(new TestSuite(jo.getJSONObject(key), level + 1));
-//				} else {
-//					if (undefined == null)
-//						undefined = new ArrayList<>();
-//					undefined.add(jo.get(key));
-//				}
-//				break;
 			case "name":
 				name = jo.getString(key);
 				break;
