@@ -8,21 +8,27 @@ import java.awt.LayoutManager;
 
 public class MyLayout implements LayoutManager{
 	private static final int TAB = 100;
-	private int vgap;
-    private int minWidth = 0, minHeight = 0;
+	private static final int GAP = 5;
+    private int minWidth = 0, minHeight = GAP;
     private int preferredWidth = 0, preferredHeight = 0;
     private boolean sizeUnknown = true;
 
 	
-	
-	
-	public MyLayout() {
-		vgap = 5;
-	}
-
 	@Override
 	public void addLayoutComponent(String name, Component comp) {
+		int width, height;
+		Dimension d = comp.getPreferredSize();
 		
+		if (comp instanceof TestPanel) {
+			width = GAP * 2 + d.width;
+			height = d.height + GAP;
+			minWidth = Math.max(minWidth, width);
+			width += ((TestPanel)comp).getIndent() * TAB;
+			preferredWidth = Math.max(preferredWidth, width);
+			minHeight += height;
+			if (comp.isVisible())
+				preferredHeight += height;
+		}
 		
 	}
 
@@ -49,7 +55,7 @@ public class MyLayout implements LayoutManager{
 
                 if (i > 0) {
                     preferredWidth += d.width/3;
-                    preferredHeight += vgap;
+                    preferredHeight += GAP;
                 } else {
                     preferredWidth = d.width;
                 }
@@ -63,7 +69,8 @@ public class MyLayout implements LayoutManager{
 
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
-        Dimension dim = new Dimension(0, 0);
+        Dimension dim = new Dimension(preferredWidth, preferredHeight);
+        /*
         int nComps = parent.getComponentCount();
 
         setSizes(parent);
@@ -76,13 +83,15 @@ public class MyLayout implements LayoutManager{
                      + insets.top + insets.bottom;
 
         sizeUnknown = false;
-
+		*/
         return dim;
 	}
 
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
-        Dimension dim = new Dimension(0, 0);
+		
+        Dimension dim = new Dimension(minWidth, minHeight);
+        /*
         int nComps = parent.getComponentCount();
 
         //Always add the container's insets!
@@ -93,7 +102,7 @@ public class MyLayout implements LayoutManager{
                      + insets.top + insets.bottom;
 
         sizeUnknown = false;
-
+		*/
         return dim;
 	}
 
@@ -107,7 +116,7 @@ public class MyLayout implements LayoutManager{
 
         
         if (sizeUnknown) {
-            setSizes(parent);
+            //setSizes(parent);
         }
         
         xOffset = TAB;
@@ -134,7 +143,7 @@ public class MyLayout implements LayoutManager{
             	quotient = ((TestPanel)c).getIndent();
 
                 // increase y, if appropriate
-            	y += (i > 0) ? previousHeight + vgap : 0;
+            	y += (i > 0) ? previousHeight + GAP : 0;
 
                 // Set the component's size and position.
                 c.setBounds(xOffset * quotient, y, d.width, d.height);
