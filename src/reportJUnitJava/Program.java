@@ -21,6 +21,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -44,6 +45,8 @@ public class Program extends JFrame implements ActionListener {
 	TestRun testRun;
 	TestPanel testPanel;
 	Container container;
+	JPanel panel;
+	JScrollPane jScrollPane;
 
 	public Program() {
 		init();
@@ -55,7 +58,15 @@ public class Program extends JFrame implements ActionListener {
 		setMinimumSize(new Dimension(200, 100));
 		container = getContentPane();
 		//container.setPreferredSize(new Dimension(800, 500));
-		container.setLayout(new MyLayout());
+		panel = new JPanel(new MyLayout());
+		panel.setBackground(Color.RED);
+		//panel.setPreferredSize(new Dimension(300, 500));
+		jScrollPane = new JScrollPane(panel);
+		jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		container.add(jScrollPane);
+		//container.setLayout(new MyLayout());
 		// Menu
 		menuBar = new JMenuBar();
 		file = new JMenu("File");
@@ -109,12 +120,13 @@ public class Program extends JFrame implements ActionListener {
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				currentFile = fileChooser.getSelectedFile();
 				// This is where a real application would open the file.
-				this.setTitle("Report viewer : " + currentFile.getName());
+				setTitle("Report viewer : " + currentFile.getName());
 				jo = ConvertXmlToJson.convert(currentFile);
 				try {
 					testRun = new TestRun(jo);
 					// System.out.println(testRun.toString());
-					testPanel = new TestPanel(testRun, container);
+					//testPanel = new TestPanel(testRun, container);
+					panel = new TestPanel(testRun, panel);
 					//testPanel.repaint();
 					pack();
 				} catch (ReportJUnitException | JSONException | NullPointerException e1) {

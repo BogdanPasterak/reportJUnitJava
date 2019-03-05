@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 
 public class MyLayout implements LayoutManager{
+	private static final int TAB = 100;
 	private int vgap;
     private int minWidth = 0, minHeight = 0;
     private int preferredWidth = 0, preferredHeight = 0;
@@ -21,7 +22,7 @@ public class MyLayout implements LayoutManager{
 
 	@Override
 	public void addLayoutComponent(String name, Component comp) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -109,7 +110,7 @@ public class MyLayout implements LayoutManager{
             setSizes(parent);
         }
         
-        xOffset = 120;
+        xOffset = TAB;
         
         for (int i = 0 ; i < nComps ; i++) {
             Component c = parent.getComponent(i);
