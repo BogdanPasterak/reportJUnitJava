@@ -7,71 +7,58 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 
 public class MyLayout implements LayoutManager{
-	private static final int TAB = 100;
+	private static final int TAB = 50;
 	private static final int GAP = 5;
     private int minWidth = 0, minHeight = GAP;
     private int preferredWidth = 0, preferredHeight = 0;
-    private boolean sizeUnknown = true;
+    private int counter = 0;
 
 	
 	@Override
 	public void addLayoutComponent(String name, Component comp) {
-		int width, height;
-		Dimension d = comp.getPreferredSize();
-		
-		if (comp instanceof TestPanel) {
-			width = GAP * 2 + d.width;
-			height = d.height + GAP;
-			minWidth = Math.max(minWidth, width);
-			width += ((TestPanel)comp).getIndent() * TAB;
-			preferredWidth = Math.max(preferredWidth, width);
-			minHeight += height;
-			if (comp.isVisible())
-				preferredHeight += height;
-		}
-		
 	}
 
 	@Override
 	public void removeLayoutComponent(Component comp) {
-		// TODO Auto-generated method stub
-		
 	}
 
     private void setSizes(Container parent) {
-        int nComps = parent.getComponentCount();
+		int width, height;
         Dimension d = null;
+        int nComps = parent.getComponentCount();
 
-        //Reset preferred/minimum width and height.
-        preferredWidth = 0;
-        preferredHeight = 0;
-        minWidth = 0;
-        minHeight = 0;
-
-        for (int i = 0; i < nComps; i++) {
-            Component c = parent.getComponent(i);
-            if (c.isVisible()) {
-                d = c.getPreferredSize();
-
-                if (i > 0) {
-                    preferredWidth += d.width/3;
-                    preferredHeight += GAP;
-                } else {
-                    preferredWidth = d.width;
-                }
-                preferredHeight += d.height;
-
-                minWidth = Math.max(c.getMinimumSize().width, minWidth);
-                minHeight = preferredHeight;
-            }
+        if (nComps != counter) {
+	        //Reset preferred/minimum width and height.
+        	//System.out.println("Zmiana! " + nComps + " " + counter );
+        	counter = nComps;
+	        preferredWidth = 0;
+	        preferredHeight = GAP;
+	        minWidth = 0;
+	        minHeight = 0;
+	
+	        for (int i = 0; i < nComps; i++) {
+	            Component c = parent.getComponent(i);
+	    		d = c.getPreferredSize();
+	    		if (c instanceof TestPanel) {
+	    			
+	    			width = GAP * 2 + d.width;
+	    			height = d.height + GAP;
+	    			
+	    			minWidth = Math.max(minWidth, width);
+	    			width += ((TestPanel)c).getIndent() * TAB;
+	    			
+	    			preferredWidth = Math.max(preferredWidth, width);
+	    			minHeight += height;
+	    			if (c.isVisible())
+	    				preferredHeight += height;
+	    		}
+	        }
         }
     }
 
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
-        Dimension dim = new Dimension(preferredWidth, preferredHeight);
-        /*
-        int nComps = parent.getComponentCount();
+        Dimension dim = new Dimension(0, 0);
 
         setSizes(parent);
 
@@ -82,17 +69,17 @@ public class MyLayout implements LayoutManager{
         dim.height = preferredHeight
                      + insets.top + insets.bottom;
 
-        sizeUnknown = false;
-		*/
+        //System.out.println("Preffered H " + preferredHeight + "  dzieci : " + parent.getComponentCount());
         return dim;
+//		setSizes(parent);
+//		return new Dimension(minWidth, preferredHeight);
 	}
 
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
-		
         Dimension dim = new Dimension(minWidth, minHeight);
-        /*
-        int nComps = parent.getComponentCount();
+
+        setSizes(parent);
 
         //Always add the container's insets!
         Insets insets = parent.getInsets();
@@ -101,8 +88,6 @@ public class MyLayout implements LayoutManager{
         dim.height = minHeight
                      + insets.top + insets.bottom;
 
-        sizeUnknown = false;
-		*/
         return dim;
 	}
 
@@ -114,13 +99,11 @@ public class MyLayout implements LayoutManager{
         int previousHeight = 0;
         int y = insets.top, xOffset, quotient;
 
-        
-        if (sizeUnknown) {
-            //setSizes(parent);
-        }
+        //System.out.println(parent.getWidth());
+        setSizes(parent);
         
         xOffset = TAB;
-        
+        // calculate current TAB
         for (int i = 0 ; i < nComps ; i++) {
             Component c = parent.getComponent(i);
             if (c.isVisible() && c instanceof TestPanel) {
@@ -156,7 +139,7 @@ public class MyLayout implements LayoutManager{
 	@Override
     public String toString() {
         String str = "";
-        return getClass().getName() + "[vgap=" + vgap + str + "]";
+        return getClass().getName() + "[vgap=" + GAP + str + "]";
     }
 
 }

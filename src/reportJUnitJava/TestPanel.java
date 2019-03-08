@@ -69,6 +69,7 @@ public class TestPanel extends JPanel {
 		 this.setLayout(new BorderLayout());
 		 this.setBorder(BorderFactory.createRaisedBevelBorder());
 
+		 this.setBounds(10, getY(), getWidth(), getHeight());
 		 this.add(new JLabel("<html><h2>Name: <em>" + title + "</em></h2></html>"), BorderLayout.NORTH);
 		 if (smalLine != null)
 			 this.add(new JLabel(smalLine), BorderLayout.CENTER);
