@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -82,7 +84,12 @@ public class TestPanel extends JPanel {
 				 child = testSuite.getTestSuites().size();
 			 else if (testSuite.getTestCases() != null)
 				 child = testSuite.getTestCases().size();
-			 add(new JLabel(String.valueOf(child)), BorderLayout.SOUTH);
+			 JPanel jp = new JPanel();
+			 jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
+			 jp.add(new JButton("AAA"));
+			 jp.add(new JLabel(String.valueOf(child)));
+			 add(jp, BorderLayout.SOUTH);
+			 
 		 }
 		 
 		 setSize(getPreferredSize());
