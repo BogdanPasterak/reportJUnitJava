@@ -22,6 +22,7 @@ public class TestPanel extends JPanel {
 	private TestRun testRun;
 	private ArrayList<TestSuite> testSuites;
 	private TestCase testCase;
+	JPanel cover;
 	
 	public TestPanel(TestRun testRun, Container parent) {
 		
@@ -29,7 +30,8 @@ public class TestPanel extends JPanel {
 		this.testRun = testRun;
 		buildPanel(testRun.getName(), "Project: " + testRun.getProject());
 
-		parent.add(this);
+		
+		parent.add(cover);
 		
 		new TestPanel(testRun.getTestSuite(), parent);
 		
@@ -41,7 +43,7 @@ public class TestPanel extends JPanel {
 		testSuites.add(testSuite);
 		buildPanel(testSuite.getName(), null);
 		
-		parent.add(this);
+		parent.add(cover);
 		
 		if (testSuite.getTestSuites() != null) {
 			for (TestSuite testS : testSuite.getTestSuites()) {
@@ -60,7 +62,7 @@ public class TestPanel extends JPanel {
 		this.testCase = testCase;
 		buildPanel(testCase.getName(), testCase.getClassname());
 		
-		parent.add(this);
+		parent.add(cover);
 		
 	}
 	
@@ -73,6 +75,11 @@ public class TestPanel extends JPanel {
 		 this.add(new JLabel("<html><h2>Name: <em>" + title + "</em></h2></html>"), BorderLayout.NORTH);
 		 if (smalLine != null)
 			 this.add(new JLabel(smalLine), BorderLayout.CENTER);
+		 
+		cover = new JPanel();
+		cover.setBackground(Color.GRAY);
+		cover.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 400));
+		cover.add(this);
 		 
 	 }
 	

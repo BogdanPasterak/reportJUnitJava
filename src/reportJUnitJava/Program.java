@@ -45,9 +45,9 @@ public class Program extends JFrame implements ActionListener {
 	private void init() {
 		setTitle("Report viewer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(200, 100));
+		//setMinimumSize(new Dimension(800, 800));
 		container = getContentPane();
-		//container.setPreferredSize(new Dimension(800, 500));
+		container.setPreferredSize(new Dimension(800, 800));
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setBackground(Color.YELLOW);
