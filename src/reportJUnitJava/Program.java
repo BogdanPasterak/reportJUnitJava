@@ -49,7 +49,7 @@ public class Program extends JFrame implements ActionListener {
 		container = getContentPane();
 		container.setPreferredSize(new Dimension(800, 800));
 		panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setLayout(null);
 		panel.setBackground(Color.YELLOW);
 		//panel.setPreferredSize(new Dimension(300, 500));
 		jScrollPane = new JScrollPane(panel);
