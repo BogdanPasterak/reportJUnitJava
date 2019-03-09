@@ -86,8 +86,11 @@ public class TestPanel extends JPanel {
 				 child = testSuite.getTestCases().size();
 			 JPanel jp = new JPanel();
 			 jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
+			 jp.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 			 jp.add(new JButton("AAA"));
-			 jp.add(new JLabel(String.valueOf(child)));
+			 JLabel jl = new JLabel(String.valueOf(child));
+			 jl.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0));
+			 jp.add(jl);
 			 add(jp, BorderLayout.SOUTH);
 			 
 		 }
