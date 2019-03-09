@@ -76,8 +76,6 @@ public class TestPanel extends JPanel {
 		 if (smalLine != null)
 			 add(new JLabel(smalLine), BorderLayout.NORTH);
 		 
-		 setSize(getPreferredSize());
-		 setLocation(new Point(10 + indent * 50, count));
 		 if (testSuite != null) {
 			 int child = 0;
 			 if (testSuite.getTestSuites() != null)
@@ -87,6 +85,8 @@ public class TestPanel extends JPanel {
 			 add(new JLabel(String.valueOf(child)), BorderLayout.SOUTH);
 		 }
 		 
+		 setSize(getPreferredSize());
+		 setLocation(new Point(10 + indent * 50, count));
 		 count += getHeight() + 10;
 		 
 	 }
@@ -94,6 +94,12 @@ public class TestPanel extends JPanel {
 	public int getIndent(){
 		return indent;
 	}
+
+	public static int getCount() {
+		return count;
+	}
+	
+
 	
 
 }

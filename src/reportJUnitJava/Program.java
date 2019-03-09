@@ -51,6 +51,7 @@ public class Program extends JFrame implements ActionListener {
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(Color.YELLOW);
+		//panel.setPreferredSize(new Dimension(800, 2000));
 		//panel.setPreferredSize(new Dimension(300, 500));
 		jScrollPane = new JScrollPane(panel);
 		jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -117,7 +118,8 @@ public class Program extends JFrame implements ActionListener {
 					testRun = new TestRun(jo);
 					// System.out.println(testRun.toString());
 					//testPanel = new TestPanel(testRun, container);
-					new TestPanel(testRun, panel);
+					testPanel = new TestPanel(testRun, panel);
+					panel.setPreferredSize(new Dimension(800, TestPanel.getCount()));;
 					//testPanel.repaint();
 					//System.out.println("Dzieci " + panel.getComponentCount());
 					pack();
