@@ -6,10 +6,12 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +23,7 @@ import javax.swing.text.AbstractDocument.Content;
 public class TestPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private static final String PATH = System.getProperty("user.dir") + "/res/";
 	private static int count = 10;
 	private int indent;
 	private TestRun testRun;
@@ -28,7 +31,7 @@ public class TestPanel extends JPanel {
 	private TestCase testCase;
 	
 	public TestPanel(TestRun testRun, Container parent) {
-		
+
 		indent = 0;
 		this.testRun = testRun;
 		buildPanel(testRun.getName(), "Project: " + testRun.getProject());
@@ -87,7 +90,10 @@ public class TestPanel extends JPanel {
 			 JPanel jp = new JPanel();
 			 jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
 			 jp.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-			 jp.add(new JButton("AAA"));
+			 JButton jb = new JButton();
+			 jb.setIcon(new ImageIcon(PATH + "down.png"));
+			 jb.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+			 jp.add(jb);
 			 JLabel jl = new JLabel(String.valueOf(child));
 			 jl.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0));
 			 jp.add(jl);
