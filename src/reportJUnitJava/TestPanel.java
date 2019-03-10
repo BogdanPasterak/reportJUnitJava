@@ -90,9 +90,10 @@ public class TestPanel extends JPanel {
 			 JPanel jp = new JPanel();
 			 jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
 			 jp.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-			 JButton jb = new JButton();
-			 jb.setIcon(new ImageIcon(PATH + "down.png"));
-			 jb.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+			 JButton jb = new JButton(new ImageIcon(PATH + "down.png"));
+			 jb.setFocusPainted(false);
+			 //jb.setIcon(new ImageIcon(PATH + "down.png"));
+			 //jb.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 			 jp.add(jb);
 			 JLabel jl = new JLabel(String.valueOf(child));
 			 jl.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0));
