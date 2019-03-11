@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+    <title>Report</title>
+    <meta charset="utf-8">
+    <meta author="Bogdan Pasterak">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <style>
+        p,
+        h3 {
+            margin: 5px;
+        }
+
+        div {
+            padding: 5px;
+        }
+
+        .flow-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .extra {
+            /* padding: 5px; */
+            padding-left: 30px;
+            background-color: lightcyan;
+        }
+
+        .fill {
+            flex-grow: 1;
+        }
+
+        .offset {
+            width: 50px;
+        }
+        .invis {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Start</h1>
+        <hr>
+    </header>
+
+    <article>
+        <div class="tp flow-row" id="tp000">
+            <div style="background-color: lightgreen;">
+                <p>Project: Demo</p>
+                <h3>Name: TestReport</h3>
+                <div class="flow-row">
+                    <button class="down">V</button>
+                    <p>7</p>
+                    <button>VVV</button>
+                </div>
+            </div>
+            <div class="extra">
+                <button>+</button>
+                <br/>
+                <button>></button>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div class="tp flow-row" id="tp001">
+            <div class="offset"></div>
+            <div style="background-color: lightgreen;">
+                <h3>Name: TestReport</h3>
+                <div class="flow-row">
+                    <button class="down">V</button>
+                    <p>2</p>
+                    <button>VVV</button>
+                </div>
+            </div>
+            <div class="extra">
+                <button>+</button>
+                <br/>
+                <button>&gt;</button>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        <hr>
+        Copyright &copy; 2018 &nbsp; Bogdan Pasterak
+    </footer>
+    <script src="report.js"></script>
+</body>
+
+</html>
