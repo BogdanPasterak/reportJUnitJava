@@ -69,7 +69,7 @@
                 <br />
                 <button>></button>
             </div>
-            <div class="extra" style="height: 110px">
+            <div class="extra">
                 <p>jakies info extra</p>
                 <p>jakies info extra</p>
                 <p>jakies info extra</p>
@@ -108,7 +108,13 @@
     <script>
         document.querySelectorAll(".btn-expand").forEach((button) => {
             button.addEventListener("click", (e) => {
-                console.log(e.srcElement);
+                const parent = e.srcElement.parentElement;
+                const sibling = parent.nextElementSibling;
+                sibling.classList.add("invis");
+                var height = parent.parentElement.clientHeight - 10;
+                parent.parentElement.style.height = height + "px";
+                sibling.classList.remove("invis");
+                console.log(height);
             });
         });
     </script>
