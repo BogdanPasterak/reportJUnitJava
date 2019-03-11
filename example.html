@@ -23,10 +23,14 @@
             flex-direction: row;
         }
 
-        .extra {
-            /* padding: 5px; */
-            padding-left: 30px;
+        .expand {
+            padding-left: 10px;
             background-color: lightcyan;
+        }
+
+        .extra {
+            display: flex;
+            flex-flow: column wrap;
         }
 
         .fill {
@@ -36,6 +40,7 @@
         .offset {
             width: 50px;
         }
+
         .invis {
             display: none;
         }
@@ -59,13 +64,20 @@
                     <button>VVV</button>
                 </div>
             </div>
-            <div class="extra">
-                <button>+</button>
-                <br/>
+            <div class="expand">
+                <button class="btn-expand">+</button>
+                <br />
                 <button>></button>
             </div>
-            <div>
-
+            <div class="extra" style="height: 110px">
+                <p>jakies info extra</p>
+                <p>jakies info extra</p>
+                <p>jakies info extra</p>
+                <p>jakies info extra</p>
+                <p>jakies info extra</p>
+                <p>jakies info extra</p>
+                <p>jakies info extra</p>
+                <p>jakies info extra</p>
             </div>
         </div>
         <div class="tp flow-row" id="tp001">
@@ -78,12 +90,12 @@
                     <button>VVV</button>
                 </div>
             </div>
-            <div class="extra">
-                <button>+</button>
-                <br/>
+            <div class="expand">
+                <button class="btn-expand">+</button>
+                <br />
                 <button>&gt;</button>
             </div>
-            <div>
+            <div class="extra">
 
             </div>
         </div>
@@ -93,7 +105,13 @@
         <hr>
         Copyright &copy; 2018 &nbsp; Bogdan Pasterak
     </footer>
-    <script src="report.js"></script>
+    <script>
+        document.querySelectorAll(".btn-expand").forEach((button) => {
+            button.addEventListener("click", (e) => {
+                console.log(e.srcElement);
+            });
+        });
+    </script>
 </body>
 
 </html>
