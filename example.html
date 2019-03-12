@@ -31,6 +31,8 @@
         .extra {
             display: flex;
             flex-flow: column wrap;
+            background-color: lightgoldenrodyellow;
+            justify-content: space-between;
         }
 
         .fill {
@@ -41,7 +43,7 @@
             width: 50px;
         }
 
-        .invis {
+        .hidden {
             display: none;
         }
     </style>
@@ -54,7 +56,7 @@
     </header>
 
     <article>
-        <div class="tp flow-row" id="tp000">
+        <div class="tp flow-row" id="tp000" offset="0">
             <div style="background-color: lightgreen;">
                 <p>Project: Demo</p>
                 <h3>Name: TestReport</h3>
@@ -69,20 +71,20 @@
                 <br />
                 <button>></button>
             </div>
-            <div class="extra">
+            <div class="extra hidden">
+                <p>jakies info ex</p>
                 <p>jakies info extra</p>
                 <p>jakies info extra</p>
+                <p>jakies info</p>
                 <p>jakies info extra</p>
-                <p>jakies info extra</p>
-                <p>jakies info extra</p>
-                <p>jakies info extra</p>
-                <p>jakies info extra</p>
-                <p>jakies info extra</p>
+                <p>jakies extra</p>
+                <p>jakies info extra l</p>
+                <p>jakies info extra1</p>
             </div>
         </div>
-        <div class="tp flow-row" id="tp001">
+        <div class="tp flow-row" id="tp001" offset="1">
             <div class="offset"></div>
-            <div style="background-color: lightgreen;">
+            <div style="background-color: lightblue;">
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
                     <button class="down">V</button>
@@ -95,8 +97,11 @@
                 <br />
                 <button>&gt;</button>
             </div>
-            <div class="extra">
-
+            <div class="extra hidden">
+                <p>jakies info extra</p>
+                <p>jakies info extra222</p>
+                <p>jakies info</p>
+                <p>jakies info extra</p>
             </div>
         </div>
     </article>
@@ -107,14 +112,34 @@
     </footer>
     <script>
         document.querySelectorAll(".btn-expand").forEach((button) => {
+            // expand or hidden extra info on right side
             button.addEventListener("click", (e) => {
-                const parent = e.srcElement.parentElement;
+                const self = e.srcElement;
+                const parent = self.parentElement;
                 const sibling = parent.nextElementSibling;
-                sibling.classList.add("invis");
-                var height = parent.parentElement.clientHeight - 10;
-                parent.parentElement.style.height = height + "px";
-                sibling.classList.remove("invis");
-                console.log(height);
+                const grand = parent.parentElement;
+                // expand
+                if (self.firstChild.textContent == "+") {
+                    self.firstChild.textContent = "-";
+                    // set height of grandpa if is not set
+                    if ( ! grand.style.height) {
+                        var h = grand.offsetHeight - 10;
+                        grand.style.height = h + "px";
+                    }
+                    sibling.classList.remove("hidden");
+                    // calculate width of sibling (issue of Chrome)
+                    if ( ! sibling.style.width) {
+                        var number = sibling.querySelectorAll("p").length;
+                        var h = sibling.querySelector("p").offsetHeight + 10;
+                        var ph = parent.offsetHeight - 10;
+                        var col = Math.ceil(number / Math.floor(ph / h));
+                        sibling.style.width = ((sibling.offsetWidth - 10) * col) + "px";
+                    }
+                // hidden
+                } else {
+                    self.firstChild.textContent = "+";
+                    sibling.classList.add("hidden");
+                }
             });
         });
     </script>
