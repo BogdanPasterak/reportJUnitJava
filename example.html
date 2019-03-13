@@ -73,7 +73,7 @@
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
                     <button class="down">V</button>
-                    <p>7</p>
+                    <p></p> <p>2</p> <p></p>
                     <button>VVV</button>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
                     <button class="down">V</button>
-                    <p>2</p>
+                    <p></p> <p>2</p> <p></p>
                     <button>VVV</button>
                 </div>
             </div>
@@ -148,7 +148,6 @@
                 <p>ClassName: TestReport.TestCase</p>
                 <h3>Name: TestReport.TestInitial</h3>
                 <div class="flow-row">
-                    <button class="down">V</button>
                 </div>
             </div>
             <div class="expand">
@@ -166,7 +165,7 @@
             <div class="offset"></div>
             <div class="main">
                 <p>ClassName: TestReport.TestCase</p>
-                <h3>Name: TestReport.TestInitial</h3>
+                <h3>Name: TestReport.TestValidationData</h3>
                 <div class="flow-row">
                     <button class="down">V</button>
                 </div>
@@ -187,7 +186,7 @@
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
                     <button class="down">V</button>
-                    <p>2</p>
+                    <p></p> <p>1</p> <p></p>
                     <button>VVV</button>
                 </div>
             </div>
@@ -206,8 +205,25 @@
                 <div class="cover">
                     <p>something info</p>
                 </div>
+            </div>
+        </div>
+        <!-- TestCase -->
+        <div class="tp flow-row" id="tp003" offset="2">
+            <div class="offset"></div>
+            <div class="offset"></div>
+            <div class="main">
+                <p>ClassName: TestReport.TestCase</p>
+                <h3>Name: TestReport.TestNext</h3>
+                <div class="flow-row">
+                    <button class="down">V</button>
+                </div>
+            </div>
+            <div class="expand">
+                <button class="btn-expand">+</button>
+            </div>
+            <div class="extra hidden">
                 <div class="cover">
-                    <p>something info extra</p>
+                    <p>something info_extra</p>
                 </div>
             </div>
         </div>
@@ -225,45 +241,48 @@
         document.querySelectorAll(".btn-expand").forEach((button) => {
             // expand or hidden extra info on right side
             button.addEventListener("click", (e) => {
-                const self = e.srcElement;
-                const parent = self.parentElement;
-                const sibling = parent.nextElementSibling;
-                const grand = parent.parentElement;
-                // expand
-                if (self.firstChild.textContent == "+") {
-                    self.firstChild.textContent = "-";
-                    // set height of grandpa if is not set
-                    if (!grand.style.height) {
-                        var h = grand.offsetHeight - 10;
-                        grand.style.height = h + "px";
-                    }
-                    sibling.classList.remove("hidden");
-                    // calculate width of sibling (issue of Chrome)
-                    if (!sibling.style.width) {
-                        var listCover = sibling.querySelectorAll(".cover");
-                        var number = listCover.length;
-                        var h = listCover[0].offsetHeight;
-                        var ph = parent.offsetHeight - 10;
-                        var col = Math.ceil(number / Math.floor(ph / h));
-                        var width = col;
-                        for (var i = 0; i < col; i++)
-                            width += listCover[i * col].offsetWidth;
-                        sibling.style.width = width + "px";
-                    }
-                    // hidden
-                } else {
-                    self.firstChild.textContent = "+";
-                    sibling.classList.add("hidden");
-                }
+                expand(e.srcElement);
             });
         });
         document.querySelectorAll(".btn-expand-all-nested").forEach((button) => {
             // expand or hidden with nested block
             button.addEventListener("click", (e) => {
                 const self = e.srcElement;
-
+                console.log(self)
             });
         });
+        function expand(srcButton) {
+            const parent = srcButton.parentElement;
+            const sibling = parent.nextElementSibling;
+            const grand = parent.parentElement;
+            const label = srcButton.firstChild;
+            // expand
+            if (label.textContent == "+") {
+                label.textContent = "-";
+                // set height of grandpa if is not set
+                if (!grand.style.height) {
+                    var h = grand.offsetHeight - 10;
+                    grand.style.height = h + "px";
+                }
+                sibling.classList.remove("hidden");
+                // calculate width of sibling (issue of Chrome)
+                if (!sibling.style.width) {
+                    var listCover = sibling.querySelectorAll(".cover");
+                    var number = listCover.length;
+                    var h = listCover[0].offsetHeight;
+                    var ph = parent.offsetHeight - 10;
+                    var col = Math.ceil(number / Math.floor(ph / h));
+                    var width = col;
+                    for (var i = 0; i < col; i++)
+                        width += listCover[i * col].offsetWidth;
+                    sibling.style.width = width + "px";
+                }
+                // hidden
+            } else {
+                label.textContent = "+";
+                sibling.classList.add("hidden");
+            }
+        }
     </script>
 </body>
 
