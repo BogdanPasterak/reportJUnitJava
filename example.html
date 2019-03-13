@@ -23,6 +23,10 @@
             flex-direction: row;
         }
 
+        .main {
+            background-color: lightgreen;
+        }
+
         .expand {
             padding-left: 10px;
             background-color: lightcyan;
@@ -32,7 +36,7 @@
             display: flex;
             flex-flow: column wrap;
             background-color: lightgoldenrodyellow;
-            justify-content: space-between;
+            /* justify-content: space-between; */
         }
 
         .fill {
@@ -46,11 +50,7 @@
         .hidden {
             display: none;
         }
-        .ppp {
-            border: 0.05em solid red;
-            padding: 0.2em;
-            margin: 0.3em;
-        }
+
         .cover {
             margin: 0;
             padding: 0;
@@ -66,8 +66,9 @@
     </header>
 
     <article>
+        <!-- TestRun -->
         <div class="tp flow-row" id="tp000" offset="0">
-            <div style="background-color: lightgreen;">
+            <div class="main">
                 <p>Project: Demo</p>
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
@@ -79,11 +80,11 @@
             <div class="expand">
                 <button class="btn-expand">+</button>
                 <br />
-                <button>></button>
+                <button class="btn-expand-all-nested">&gt;</button>
             </div>
             <div class="extra hidden">
                 <div class="cover">
-                    <p class="ppp">something info ex</p>
+                    <p>something info ex</p>
                 </div>
                 <div class="cover">
                     <p>something info extra</p>
@@ -92,25 +93,26 @@
                     <p>something info extra</p>
                 </div>
                 <div class="cover">
-                    <p>something info</p>
+                    <p>info</p>
                 </div>
                 <div class="cover">
-                    <p>something info extra</p>
+                    <p>something </p>
                 </div>
                 <div class="cover">
-                    <p>something extra</p>
+                    <p>extra</p>
                 </div>
                 <div class="cover">
                     <p>something info extra large</p>
                 </div>
                 <div class="cover">
-                    <p>something info extra1</p>
+                    <p>something</p>
                 </div>
             </div>
         </div>
+        <!-- TestSuite -->
         <div class="tp flow-row" id="tp001" offset="1">
             <div class="offset"></div>
-            <div style="background-color: lightblue;">
+            <div class="main">
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
                     <button class="down">V</button>
@@ -121,7 +123,7 @@
             <div class="expand">
                 <button class="btn-expand">+</button>
                 <br />
-                <button>&gt;</button>
+                <button class="btn-expand-all-nested">&gt;</button>
             </div>
             <div class="extra hidden">
                 <div class="cover">
@@ -138,12 +140,87 @@
                 </div>
             </div>
         </div>
+        <!-- TestCase -->
+        <div class="tp flow-row" id="tp002" offset="2">
+            <div class="offset"></div>
+            <div class="offset"></div>
+            <div class="main">
+                <p>ClassName: TestReport.TestCase</p>
+                <h3>Name: TestReport.TestInitial</h3>
+                <div class="flow-row">
+                    <button class="down">V</button>
+                </div>
+            </div>
+            <div class="expand">
+                <button class="btn-expand">+</button>
+            </div>
+            <div class="extra hidden">
+                <div class="cover">
+                    <p>something info extra</p>
+                </div>
+            </div>
+        </div>
+        <!-- TestCase -->
+        <div class="tp flow-row" id="tp003" offset="2">
+            <div class="offset"></div>
+            <div class="offset"></div>
+            <div class="main">
+                <p>ClassName: TestReport.TestCase</p>
+                <h3>Name: TestReport.TestInitial</h3>
+                <div class="flow-row">
+                    <button class="down">V</button>
+                </div>
+            </div>
+            <div class="expand">
+                <button class="btn-expand">+</button>
+            </div>
+            <div class="extra hidden">
+                <div class="cover">
+                    <p>something info_extra</p>
+                </div>
+            </div>
+        </div>
+        <!-- TestSuite -->
+        <div class="tp flow-row" id="tp001" offset="1">
+            <div class="offset"></div>
+            <div class="main">
+                <h3>Name: TestReport</h3>
+                <div class="flow-row">
+                    <button class="down">V</button>
+                    <p>2</p>
+                    <button>VVV</button>
+                </div>
+            </div>
+            <div class="expand">
+                <button class="btn-expand">+</button>
+                <br />
+                <button class="btn-expand-all-nested">&gt;</button>
+            </div>
+            <div class="extra hidden">
+                <div class="cover">
+                    <p>something info extra</p>
+                </div>
+                <div class="cover">
+                    <p>something info extra222</p>
+                </div>
+                <div class="cover">
+                    <p>something info</p>
+                </div>
+                <div class="cover">
+                    <p>something info extra</p>
+                </div>
+            </div>
+        </div>
+
     </article>
 
     <footer>
         <hr>
         Copyright &copy; 2018 &nbsp; Bogdan Pasterak
     </footer>
+
+
+
     <script>
         document.querySelectorAll(".btn-expand").forEach((button) => {
             // expand or hidden extra info on right side
@@ -156,24 +233,35 @@
                 if (self.firstChild.textContent == "+") {
                     self.firstChild.textContent = "-";
                     // set height of grandpa if is not set
-                    if ( ! grand.style.height) {
+                    if (!grand.style.height) {
                         var h = grand.offsetHeight - 10;
                         grand.style.height = h + "px";
                     }
                     sibling.classList.remove("hidden");
                     // calculate width of sibling (issue of Chrome)
-                    if ( ! sibling.style.width) {
-                        var number = sibling.querySelectorAll("p").length;
-                        var h = sibling.querySelector("p").offsetHeight + 10;
+                    if (!sibling.style.width) {
+                        var listCover = sibling.querySelectorAll(".cover");
+                        var number = listCover.length;
+                        var h = listCover[0].offsetHeight;
                         var ph = parent.offsetHeight - 10;
                         var col = Math.ceil(number / Math.floor(ph / h));
-                        sibling.style.width = ((sibling.offsetWidth - 10) * col) + "px";
+                        var width = col;
+                        for (var i = 0; i < col; i++)
+                            width += listCover[i * col].offsetWidth;
+                        sibling.style.width = width + "px";
                     }
-                // hidden
+                    // hidden
                 } else {
                     self.firstChild.textContent = "+";
                     sibling.classList.add("hidden");
                 }
+            });
+        });
+        document.querySelectorAll(".btn-expand-all-nested").forEach((button) => {
+            // expand or hidden with nested block
+            button.addEventListener("click", (e) => {
+                const self = e.srcElement;
+
             });
         });
     </script>
