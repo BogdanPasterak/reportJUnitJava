@@ -180,7 +180,7 @@
             </div>
         </div>
         <!-- TestSuite -->
-        <div class="tp flow-row" id="tp001" offset="1">
+        <div class="tp flow-row" id="tp004" offset="1">
             <div class="offset"></div>
             <div class="main">
                 <h3>Name: TestReport</h3>
@@ -208,7 +208,7 @@
             </div>
         </div>
         <!-- TestCase -->
-        <div class="tp flow-row" id="tp003" offset="2">
+        <div class="tp flow-row" id="tp005" offset="2">
             <div class="offset"></div>
             <div class="offset"></div>
             <div class="main">
@@ -248,21 +248,50 @@
             // expand or hidden with nested block
             button.addEventListener("click", (e) => {
                 const self = e.srcElement;
-                console.log(self)
+                const grandpa = self.parentElement.parentElement;
+                const number = parseInt(grandpa.getAttribute("id").substring(2));
+                const offset = parseInt(grandpa.getAttribute("offset"));
+                if (self.textContent == ">") {
+                    self.textContent = "<";
+                    if (self.parentElement.firstElementChild.firstChild.textContent == "+")
+                        expand(self.parentElement.firstElementChild);
+                }
+                else {
+                    self.textContent = ">";
+                    if (self.parentElement.firstElementChild.firstChild.textContent == "-")
+                        expand(self.parentElement.firstElementChild);
+                }
+                //console.log("Jest -");
+                
+                // do for self
+                for (let panel of document.querySelectorAll(".tp")) {
+                // dodac warunek zwijania albo nie
+                    if (panel.getAttribute("id").substring(2) > number) {
+                        if (panel.getAttribute("offset") <= offset)
+                            break;
+                        // only 1 deep
+                        if (panel.getAttribute("offset") > offset + 1)
+                            continue;
+                        // and all depend
+                        console.log(panel.getAttribute("id").substring(2));
+                        expand(panel.querySelector(".btn-expand"));
+                    }
+                };
+                console.log(offset);
             });
         });
         function expand(srcButton) {
             const parent = srcButton.parentElement;
             const sibling = parent.nextElementSibling;
-            const grand = parent.parentElement;
+            const grandpa = parent.parentElement;
             const label = srcButton.firstChild;
             // expand
             if (label.textContent == "+") {
                 label.textContent = "-";
                 // set height of grandpa if is not set
-                if (!grand.style.height) {
-                    var h = grand.offsetHeight - 10;
-                    grand.style.height = h + "px";
+                if (! grandpa.style.height) {
+                    var h = grandpa.offsetHeight - 10;
+                    grandpa.style.height = h + "px";
                 }
                 sibling.classList.remove("hidden");
                 // calculate width of sibling (issue of Chrome)
