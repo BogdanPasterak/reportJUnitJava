@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -77,15 +78,17 @@ public class Program extends JFrame implements ActionListener {
 				jo = ConvertXmlToJson.convert(currentFile);
 				String newFileName = currentFile.getName();
 				newFileName = newFileName.substring(0, newFileName.length() - 3) + "html";
-				System.out.println(newFileName);
-				try (FileWriter fw = new FileWriter(new File(newFileName))){
+				//System.out.println(newFileName);
+				//					 new File(newFileName)
+				try (FileWriter fw = new FileWriter(FileDescriptor.out)){
 					testRun = new TestRun(jo);
 					
 					
 					
-					File htmlfile = new File("example.html");
+					//File htmlfile = new File("example.html");
+					fw.write("Bogdan Pasterak");
 					
-					Desktop.getDesktop().browse(htmlfile.toURI());
+					//Desktop.getDesktop().browse(htmlfile.toURI());
 					// System.out.println(testRun.toString());
 					//testPanel = new TestPanel(testRun, container);
 					pack();

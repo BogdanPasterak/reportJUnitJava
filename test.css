@@ -1,0 +1,55 @@
+p,
+h3,
+h4 {
+    padding: 0;
+    margin: 5px;
+}
+
+div {
+    padding: 5px;
+    margin: 0;
+}
+
+.flow-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.main {
+    background-color: lightgreen;
+    white-space: nowrap;
+}
+
+.expand {
+    padding-left: 10px;
+    background-color: lightcyan;
+}
+
+.extra {
+    display: flex;
+    flex-flow: column wrap;
+    background-color: lightgoldenrodyellow;
+}
+
+.fill {
+    flex-grow: 1;
+}
+
+.offset {
+    width: 50px;
+    flex-shrink: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.cover {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.main.false {
+    background-color: lightsalmon;
+}
