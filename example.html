@@ -10,7 +10,8 @@
     <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
     <style>
         p,
-        h3 {
+        h3,
+        h4 {
             margin: 5px;
         }
 
@@ -25,6 +26,7 @@
 
         .main {
             background-color: lightgreen;
+            white-space: nowrap;
         }
 
         .expand {
@@ -45,6 +47,7 @@
 
         .offset {
             width: 50px;
+            flex-shrink: 0;
         }
 
         .hidden {
@@ -55,6 +58,10 @@
             margin: 0;
             padding: 0;
             border: none;
+        }
+
+        .main.false {
+            background-color: lightsalmon;
         }
     </style>
 </head>
@@ -167,7 +174,7 @@
         <div class="tp tc flow-row hidden" id="tp003" offset="2">
             <div class="offset"></div>
             <div class="offset"></div>
-            <div class="main">
+            <div class="main false">
                 <p>ClassName: TestReport.TestCase</p>
                 <h3>Name: TestReport.TestValidationData</h3>
                 <div class="flow-row">
@@ -183,14 +190,23 @@
                 </div>
             </div>
         </div>
-        <!-- TestCase -->
+        <!-- false or error -->
         <div class="tp tf flow-row hidden" id="tp004" offset="3">
             <div class="offset"></div>
             <div class="offset"></div>
             <div class="offset"></div>
-            <div class="main">
+            <div class="main false">
+                <h3>Failure</h3>
                 <h4>java.lang.AssertionError: Not yet implemented&#13;</h4>
                 <p>at org.junit.Assert.fail(Assert.java:88)&#13;</p>
+                <p>at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;</p>
+                <p>at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;</p>
+                <p>at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;</p>
+                <p>at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;</p>
+                <p>at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;</p>
+                <p>at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;</p>
+                <p>at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:539)&#13;</p>
+                <p>at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:761)&#13;</p>
             </div>
         </div>
         <!-- TestSuite -->
@@ -227,7 +243,7 @@
         <div class="tp tc flow-row hidden" id="tp006" offset="2">
             <div class="offset"></div>
             <div class="offset"></div>
-            <div class="main">
+            <div class="main false">
                 <p>ClassName: TestReport.TestCase</p>
                 <h3>Name: TestReport.TestNext</h3>
                 <div class="flow-row">
@@ -241,6 +257,29 @@
                 <div class="cover">
                     <p>something info_extra</p>
                 </div>
+            </div>
+        </div>
+        <!-- false or error -->
+        <div class="tp tf flow-row hidden" id="tp007" offset="3">
+            <div class="offset"></div>
+            <div class="offset"></div>
+            <div class="offset"></div>
+            <div class="main false">
+                <h3>Error</h3>
+                <h4>java.lang.AssertionError: Not yet implemented&#13;</h4>
+                <p>at org.junit.Assert.fail(Assert.java:88)&#13;</p>
+                <p>at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;</p>
+                <p>at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;</p>
+                <p>at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;</p>
+                <p>at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;</p>
+                <p>at org.eclipse.jdt.internal.blebeebleble.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;</p>
+                <p>at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;</p>
+                <p>at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:539)&#13;</p>
+                <p>at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:761)&#13;</p>
+                <p>at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;</p>
+                <p>at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;</p>
+                <p>at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;</p>
+                <p>at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)&#13;</p>
             </div>
         </div>
 
@@ -329,7 +368,7 @@
                     continue;
                 if (currentNumber >= limit)
                     break;
-                if (open) 
+                if (open)
                     testBlok.classList.remove("hidden");
                 else {
                     // recursive !!!
