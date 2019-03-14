@@ -2,11 +2,13 @@ package reportJUnitJava;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -74,10 +76,13 @@ public class Program extends JFrame implements ActionListener {
 				jo = ConvertXmlToJson.convert(currentFile);
 				try {
 					testRun = new TestRun(jo);
+					File htmlfile = new File("example.html");
+					Desktop.getDesktop().browse(htmlfile.toURI());
 					// System.out.println(testRun.toString());
 					//testPanel = new TestPanel(testRun, container);
 					pack();
-				} catch (ReportJUnitException | JSONException | NullPointerException e1) {
+					this.dispose();
+				} catch (ReportJUnitException | JSONException | NullPointerException | IOException e1) {
 					this.setTitle("Report viewer");
 					//label.setForeground(Color.RED);
 					//label.setText("Error: " + e1.getMessage());
