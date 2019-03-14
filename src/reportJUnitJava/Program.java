@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,20 +25,14 @@ import org.json.JSONObject;
 public class Program extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	JMenuBar menuBar;
-	JMenu file;
-	JMenuItem load;
 	JFileChooser fileChooser;
 	FileNameExtensionFilter fileFilter;
 	File currentFile;
 	//JLabel label;
 	JSONObject jo;
 	TestRun testRun;
-	TestPanel testPanel;
-	Container container;
-	JPanel panel;
-	JScrollPane jScrollPane;
-
+	JButton start;
+	
 	public Program() {
 		init();
 	}
@@ -45,33 +40,12 @@ public class Program extends JFrame implements ActionListener {
 	private void init() {
 		setTitle("Report viewer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setMinimumSize(new Dimension(800, 800));
-		container = getContentPane();
-		container.setPreferredSize(new Dimension(800, 800));
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(Color.YELLOW);
-		//panel.setPreferredSize(new Dimension(800, 2000));
-		//panel.setPreferredSize(new Dimension(300, 500));
-		jScrollPane = new JScrollPane(panel);
-		jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		container.add(jScrollPane);
-		//container.setLayout(new MyLayout());
-		// Menu
-		menuBar = new JMenuBar();
-		file = new JMenu("File");
-		file.setMnemonic(KeyEvent.VK_F);
-		menuBar.add(file);
-
-		load = new JMenuItem("Load");
-		load.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
-		load.addActionListener(this);
-		file.add(load);
-		
-
-		this.setJMenuBar(menuBar);
+		setMinimumSize(new Dimension(300, 200));
+		setVisible(true);
+		start = new JButton("Start");
+		add(start);
+		start.addActionListener(this);
 
 		fileChooser = new JFileChooser();
 		fileFilter = new FileNameExtensionFilter("XML Files", "xml");
@@ -80,24 +54,8 @@ public class Program extends JFrame implements ActionListener {
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		currentFile = fileChooser.getSelectedFile();
 		
-		actionPerformed(new ActionEvent(load, 0, ""));
+		actionPerformed(new ActionEvent(start, 0, ""));
 		
-		//label = new JLabel("to");
-		//label.setBounds(0, 0, 580, 20);
-		// label.setMinimumSize(new Dimension(WIDTH, 20) );
-		// label.setBackground(Color.WHITE);
-		//label.setOpaque(true);
-		// label.setForeground(Color.RED);
-		// label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		//add(label);
-
-		// JButton button = new JButton("click");
-		// button.setBounds(165, 135, 115, 55);
-		// button.addActionListener(this);
-		//
-		// // adding button on frame
-		// add(button);
-		setVisible(true);
 
 	}
 
@@ -107,7 +65,7 @@ public class Program extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == load) {
+		if (e.getSource() == start) {
 			Integer returnVal = fileChooser.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				currentFile = fileChooser.getSelectedFile();
@@ -118,10 +76,6 @@ public class Program extends JFrame implements ActionListener {
 					testRun = new TestRun(jo);
 					// System.out.println(testRun.toString());
 					//testPanel = new TestPanel(testRun, container);
-					testPanel = new TestPanel(testRun, panel);
-					panel.setPreferredSize(new Dimension(800, TestPanel.getCount()));;
-					//testPanel.repaint();
-					//System.out.println("Dzieci " + panel.getComponentCount());
 					pack();
 				} catch (ReportJUnitException | JSONException | NullPointerException e1) {
 					this.setTitle("Report viewer");
