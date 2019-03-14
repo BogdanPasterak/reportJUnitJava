@@ -377,8 +377,13 @@
             else {
                 if (open)
                     srcButton.textContent = "A";
-                else
+                else { // close all 
                     srcButton.textContent = "V";
+                    currentBtn = blockSorce.querySelector(".btn-details-all");
+                        if (currentBtn) // update if have button for all
+                            currentBtn.textContent = "VVV"
+
+                }
             }
             // test all 1 level higher
             for (let testBlok of document.querySelectorAll('div[offset="' + (offset + 1) + '"]')) {
@@ -400,7 +405,7 @@
                     if (currentBtn && currentBtn.textContent == "A"){
                         show(currentBtn);
                         currentBtn = testBlok.querySelector(".btn-details-all");
-                        if (currentBtn) // close if have button for all
+                        if (currentBtn) // update if have button for all
                             currentBtn.textContent = "VVV"
                     }
                     testBlok.classList.add("hidden");
