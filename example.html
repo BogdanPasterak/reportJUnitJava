@@ -293,14 +293,14 @@
 
 
     <script>
+        // expand or hidden extra info on right side
         document.querySelectorAll(".btn-expand").forEach((button) => {
-            // expand or hidden extra info on right side
             button.addEventListener("click", (e) => {
                 expand(e.srcElement);
             });
         });
+        // expand or hidden with nested block
         document.querySelectorAll(".btn-expand-all-nested").forEach((button) => {
-            // expand or hidden with nested block
             button.addEventListener("click", (e) => {
                 const self = e.srcElement;
                 const grandpa = self.parentElement.parentElement;
@@ -338,29 +338,48 @@
                 };
             });
         });
+        // show dependent blocks 
         document.querySelectorAll(".btn-details").forEach((button) => {
-            // show dependent blocks 
+            button.addEventListener("click", (e) => {
+                show(e.srcElement);
+            });
+        });
+        // show all dependent blocks without false or error 
+        document.querySelectorAll(".btn-details-all").forEach((button) => {
             button.addEventListener("click", (e) => {
                 show(e.srcElement);
             });
         });
 
         function show(srcButton) {
+            const all = srcButton.classList.contains("btn-details-all");
             const blockSorce = srcButton.parentElement.parentElement.parentElement;
             const number = parseInt(blockSorce.getAttribute("id").substring(2));
             const offset = parseInt(blockSorce.getAttribute("offset"));
-            const open = (srcButton.textContent == "V");
+            const open = (all) ? (srcButton.textContent == "VVV") : (srcButton.textContent == "V");
             let limit = 1000;
             let currentNumber;
+            let currentBtn;
 
             for (let block of document.querySelectorAll('div[offset="' + offset + '"]'))
                 if ((currentNumber = parseInt(block.getAttribute("id").substring(2))) > number)
                     limit = currentNumber;
-            //console.log(limit);
-            if (open)
-                srcButton.textContent = "A";
-            else
-                srcButton.textContent = "V";
+            if (all) {
+                if (open){
+                    srcButton.textContent = "AAA";
+                    blockSorce.querySelector(".btn-details").textContent = "A";
+                }
+                else {
+                    srcButton.textContent = "VVV";
+                    blockSorce.querySelector(".btn-details").textContent = "V";
+                }
+            }
+            else {
+                if (open)
+                    srcButton.textContent = "A";
+                else
+                    srcButton.textContent = "V";
+            }
             // test all 1 level higher
             for (let testBlok of document.querySelectorAll('div[offset="' + (offset + 1) + '"]')) {
                 currentNumber = parseInt(testBlok.getAttribute("id").substring(2));
@@ -368,13 +387,22 @@
                     continue;
                 if (currentNumber >= limit)
                     break;
-                if (open)
-                    testBlok.classList.remove("hidden");
-                else {
+                if (open){
                     // recursive !!!
-                    const currentBtn = testBlok.querySelector(".btn-details");
-                    if (currentBtn && currentBtn.textContent == "A")
+                    currentBtn = testBlok.querySelector(".btn-details-all");
+                    if (all && currentBtn && currentBtn.textContent == "VVV")
                         show(currentBtn);
+                    testBlok.classList.remove("hidden");
+                }
+                else {
+                    // for close recursive !!!
+                    currentBtn = testBlok.querySelector(".btn-details");
+                    if (currentBtn && currentBtn.textContent == "A"){
+                        show(currentBtn);
+                        currentBtn = testBlok.querySelector(".btn-details-all");
+                        if (currentBtn) // close if have button for all
+                            currentBtn.textContent = "VVV"
+                    }
                     testBlok.classList.add("hidden");
                 }
             }
