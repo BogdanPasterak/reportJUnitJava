@@ -72,9 +72,11 @@
                 <p>Project: Demo</p>
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
-                    <button class="down">V</button>
-                    <p></p> <p>2</p> <p></p>
-                    <button>VVV</button>
+                    <button class="btn-details">V</button>
+                    <p></p>
+                    <p>2</p>
+                    <p></p>
+                    <button class="btn-details-all">VVV</button>
                 </div>
             </div>
             <div class="expand">
@@ -110,14 +112,16 @@
             </div>
         </div>
         <!-- TestSuite -->
-        <div class="tp flow-row" id="tp001" offset="1">
+        <div class="tp flow-row hidden" id="tp001" offset="1">
             <div class="offset"></div>
             <div class="main">
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
-                    <button class="down">V</button>
-                    <p></p> <p>2</p> <p></p>
-                    <button>VVV</button>
+                    <button class="btn-details">V</button>
+                    <p></p>
+                    <p>2</p>
+                    <p></p>
+                    <button class="btn-details-all">VVV</button>
                 </div>
             </div>
             <div class="expand">
@@ -141,7 +145,7 @@
             </div>
         </div>
         <!-- TestCase -->
-        <div class="tp flow-row" id="tp002" offset="2">
+        <div class="tp tc flow-row hidden" id="tp002" offset="2">
             <div class="offset"></div>
             <div class="offset"></div>
             <div class="main">
@@ -160,14 +164,14 @@
             </div>
         </div>
         <!-- TestCase -->
-        <div class="tp flow-row" id="tp003" offset="2">
+        <div class="tp tc flow-row hidden" id="tp003" offset="2">
             <div class="offset"></div>
             <div class="offset"></div>
             <div class="main">
                 <p>ClassName: TestReport.TestCase</p>
                 <h3>Name: TestReport.TestValidationData</h3>
                 <div class="flow-row">
-                    <button class="down">V</button>
+                    <button class="btn-details">V</button>
                 </div>
             </div>
             <div class="expand">
@@ -179,15 +183,27 @@
                 </div>
             </div>
         </div>
+        <!-- TestCase -->
+        <div class="tp tf flow-row hidden" id="tp004" offset="3">
+            <div class="offset"></div>
+            <div class="offset"></div>
+            <div class="offset"></div>
+            <div class="main">
+                <h4>java.lang.AssertionError: Not yet implemented&#13;</h4>
+                <p>at org.junit.Assert.fail(Assert.java:88)&#13;</p>
+            </div>
+        </div>
         <!-- TestSuite -->
-        <div class="tp flow-row" id="tp004" offset="1">
+        <div class="tp flow-row hidden" id="tp005" offset="1">
             <div class="offset"></div>
             <div class="main">
                 <h3>Name: TestReport</h3>
                 <div class="flow-row">
-                    <button class="down">V</button>
-                    <p></p> <p>1</p> <p></p>
-                    <button>VVV</button>
+                    <button class="btn-details">V</button>
+                    <p></p>
+                    <p>1</p>
+                    <p></p>
+                    <button class="btn-details-all">VVV</button>
                 </div>
             </div>
             <div class="expand">
@@ -208,14 +224,14 @@
             </div>
         </div>
         <!-- TestCase -->
-        <div class="tp flow-row" id="tp005" offset="2">
+        <div class="tp tc flow-row hidden" id="tp006" offset="2">
             <div class="offset"></div>
             <div class="offset"></div>
             <div class="main">
                 <p>ClassName: TestReport.TestCase</p>
                 <h3>Name: TestReport.TestNext</h3>
                 <div class="flow-row">
-                    <button class="down">V</button>
+                    <button class="btn-details">V</button>
                 </div>
             </div>
             <div class="expand">
@@ -258,7 +274,7 @@
                 // do for self
                 if (open) {
                     self.textContent = "<";
-                    if (! isOpen)
+                    if (!isOpen)
                         expand(btnOpen);
                 }
                 else {  // close
@@ -283,7 +299,48 @@
                 };
             });
         });
-        
+        document.querySelectorAll(".btn-details").forEach((button) => {
+            // show dependent blocks 
+            button.addEventListener("click", (e) => {
+                show(e.srcElement);
+            });
+        });
+
+        function show(srcButton) {
+            const blockSorce = srcButton.parentElement.parentElement.parentElement;
+            const number = parseInt(blockSorce.getAttribute("id").substring(2));
+            const offset = parseInt(blockSorce.getAttribute("offset"));
+            const open = (srcButton.textContent == "V");
+            let limit = 1000;
+            let currentNumber;
+
+            for (let block of document.querySelectorAll('div[offset="' + offset + '"]'))
+                if ((currentNumber = parseInt(block.getAttribute("id").substring(2))) > number)
+                    limit = currentNumber;
+            //console.log(limit);
+            if (open)
+                srcButton.textContent = "A";
+            else
+                srcButton.textContent = "V";
+            // test all 1 level higher
+            for (let testBlok of document.querySelectorAll('div[offset="' + (offset + 1) + '"]')) {
+                currentNumber = parseInt(testBlok.getAttribute("id").substring(2));
+                if (currentNumber < number)
+                    continue;
+                if (currentNumber >= limit)
+                    break;
+                if (open) 
+                    testBlok.classList.remove("hidden");
+                else {
+                    // recursive !!!
+                    const currentBtn = testBlok.querySelector(".btn-details");
+                    if (currentBtn && currentBtn.textContent == "A")
+                        show(currentBtn);
+                    testBlok.classList.add("hidden");
+                }
+            }
+        };
+
         function expand(srcButton) {
             const parent = srcButton.parentElement;
             const sibling = parent.nextElementSibling;
@@ -293,7 +350,7 @@
             if (label.textContent == "+") {
                 label.textContent = "-";
                 // set height of grandpa if is not set
-                if (! grandpa.style.height) {
+                if (!grandpa.style.height) {
                     var h = grandpa.offsetHeight - 10;
                     grandpa.style.height = h + "px";
                 }
@@ -315,7 +372,7 @@
                 label.textContent = "+";
                 sibling.classList.add("hidden");
             }
-        }
+        };
     </script>
 </body>
 
