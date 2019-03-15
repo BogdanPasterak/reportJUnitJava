@@ -35,7 +35,7 @@ public class Program extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setMinimumSize(new Dimension(300, 200));
-		setVisible(true);
+		setVisible(false);
 		start = new JButton("Start");
 		add(start);
 		start.addActionListener(this);
@@ -65,7 +65,7 @@ public class Program extends JFrame implements ActionListener {
 			if (true) { //returnVal == JFileChooser.APPROVE_OPTION) {
 				// stop choise; hardcode
 				//currentFile = fileChooser.getSelectedFile();
-				currentFile = new File("TestRep2P2I2F1E.xml");
+				currentFile = new File("TestRep2P2I2F1E.xml");//"AllTests.xml");//
 				// This is where a real application would open the file.
 				setTitle("Report viewer : " + currentFile.getName());
 				jo = ConvertXmlToJson.convert(currentFile);
@@ -80,7 +80,7 @@ public class Program extends JFrame implements ActionListener {
 					
 					//File htmlfile = new File("example.html");
 					for(TestObject to : list)
-						fw.write(to.toString());
+						fw.write(to.toString() + "\n");
 					
 					//Desktop.getDesktop().browse(htmlfile.toURI());
 					// System.out.println(testRun.toString());

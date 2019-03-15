@@ -6,6 +6,7 @@ public class TestObject {
 
 	private Type type;
 	private int indent;
+	private int children;
 	private String preTitle;
 	private String title;
 	private String postTitle;
@@ -25,10 +26,19 @@ public class TestObject {
 	
 	@Override
 	public String toString() {
-		return "TestObject => {Type: " + type + ", Title: " + title + ", Indent: " + indent +
-				((preTitle != null) ? ", PreTitle: " + preTitle : "") +
-				((postTitle != null) ? ", PostTitle: " + postTitle : "") +
-				"}";
+		String s = "TestObject => ";
+		for (int i = 0; i < indent; i++)
+			s += "  ";
+		s += 	"{Type: " + type + ", Title: \"" + title + "\", Indent: " + indent +
+				((children > 0) ? ", Children: " + children : "") +
+				((preTitle != null) ? ", PreTitle: \"" + preTitle + "\"" : "") +
+				((postTitle != null) ? ", PostTitle: \"" + postTitle + "\"" : "") +
+				((propertys != null) ? ", Propertys No: " + propertys.size() : "") +
+				((lines != null) ? ", Lines No: " + lines.size() : "") +
+				((btnPlus || btnRight || btnDown || btnAll) ? ", Buttons: " : "") +
+				((btnPlus) ? "+" : "") + ((btnRight) ? ">" : "") +
+				((btnDown) ? "V" : "") + ((btnAll) ? "A" : "") + "}";
+		return s;
 	}
 	
 	public Type getType() {
@@ -63,6 +73,14 @@ public class TestObject {
 		this.title = title;
 	}
 
+	public int getChildren() {
+		return children;
+	}
+
+	public void setChildren(int children) {
+		this.children = children;
+	}
+
 	public String getPostTitle() {
 		return postTitle;
 	}
@@ -95,32 +113,32 @@ public class TestObject {
 		return btnPlus;
 	}
 
-	public void setBtnPlus(boolean btnPlus) {
-		this.btnPlus = btnPlus;
+	public void setBtnPlus() {
+		this.btnPlus = true;
 	}
 
 	public boolean isBtnRight() {
 		return btnRight;
 	}
 
-	public void setBtnRight(boolean btnRight) {
-		this.btnRight = btnRight;
+	public void setBtnRight() {
+		this.btnRight = true;
 	}
 
 	public boolean isBtnDown() {
 		return btnDown;
 	}
 
-	public void setBtnDown(boolean btnDown) {
-		this.btnDown = btnDown;
+	public void setBtnDown() {
+		this.btnDown = true;
 	}
 
 	public boolean isBtnAll() {
 		return btnAll;
 	}
 
-	public void setBtnAll(boolean btnAll) {
-		this.btnAll = btnAll;
+	public void setBtnAll() {
+		this.btnAll = true;
 	}
 	
 	public static enum Type { testrun, testsuite, testcase, failure, error }
