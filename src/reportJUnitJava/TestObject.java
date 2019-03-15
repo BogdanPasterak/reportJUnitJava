@@ -16,6 +16,7 @@ public class TestObject {
 	private boolean btnRight;
 	private boolean btnDown;
 	private boolean btnAll;	
+	private boolean fail;
 	
 	public TestObject (Type type,String title, int indent) {
 		this.type = type;
@@ -29,7 +30,7 @@ public class TestObject {
 		String s = "TestObject => ";
 		for (int i = 0; i < indent; i++)
 			s += "  ";
-		s += 	"{Type: " + type + ", Title: \"" + title + "\", Indent: " + indent +
+		return s + "{Type: " + type + ", Title: \"" + title + "\", Indent: " + indent +
 				((children > 0) ? ", Children: " + children : "") +
 				((preTitle != null) ? ", PreTitle: \"" + preTitle + "\"" : "") +
 				((postTitle != null) ? ", PostTitle: \"" + postTitle + "\"" : "") +
@@ -37,8 +38,8 @@ public class TestObject {
 				((lines != null) ? ", Lines No: " + lines.size() : "") +
 				((btnPlus || btnRight || btnDown || btnAll) ? ", Buttons: " : "") +
 				((btnPlus) ? "+" : "") + ((btnRight) ? ">" : "") +
-				((btnDown) ? "V" : "") + ((btnAll) ? "A" : "") + "}";
-		return s;
+				((btnDown) ? "V" : "") + ((btnAll) ? "A" : "") +
+				((fail) ? ", Fail" : "") + "}";
 	}
 	
 	public Type getType() {
@@ -141,5 +142,13 @@ public class TestObject {
 		this.btnAll = true;
 	}
 	
+	public boolean isFail() {
+		return fail;
+	}
+
+	public void setFail() {
+		this.fail = true;
+	}
+
 	public static enum Type { testrun, testsuite, testcase, failure, error }
 }

@@ -19,9 +19,10 @@ public class ConvertJsonToTestObject {
 		return list;
 	}
 
-	private static void getTestObject(JSONObject jo, int indent, ArrayList<TestObject> list) throws JSONException {
+	private static boolean getTestObject(JSONObject jo, int indent, ArrayList<TestObject> list) throws JSONException {
 		//System.out.println(jo);
 		String name;
+		boolean fail = false;
 		
 		// TestRun
 		if (jo.has("testrun")) {
@@ -57,7 +58,12 @@ public class ConvertJsonToTestObject {
 			
 			// recursive add testsuite
 			if (tr.has("testsuite") && tr.get("testsuite") instanceof JSONObject)
-				getTestObject(tr, 1, list);
+				fail = getTestObject(tr, 1, list);
+			
+			if (fail)
+				to.setFail();
+
+			return fail;
 			
 		} 
 		// TestSuite
@@ -94,28 +100,31 @@ public class ConvertJsonToTestObject {
 			// recursive add testsuite or testcase
 			if (ts.has("testsuite")) {
 				if (ts.get("testsuite") instanceof JSONObject)
-					getTestObject(ts, indent + 1, list);
+					fail = getTestObject(ts, indent + 1, list);
 				else if (ts.get("testsuite") instanceof JSONArray) {
 					for (int index = 0; index < ts.getJSONArray("testsuite").length(); index++) {
 						JSONObject temp = new JSONObject();
 						temp.put("testsuite", ts.getJSONArray("testsuite").getJSONObject(index));
-						getTestObject(temp, indent + 1, list);
+						fail = getTestObject(temp, indent + 1, list) || fail;
 					}
 				}
 					to.setChildren(ts.getJSONArray("testsuite").length());
 			} else if (ts.has("testcase")) {
 				if (ts.get("testcase") instanceof JSONObject)
-					getTestObject(ts, indent + 1, list);
+					fail = getTestObject(ts, indent + 1, list);
 				else if (ts.get("testcase") instanceof JSONArray) {
 					for (int index = 0; index < ts.getJSONArray("testcase").length(); index++) {
 						JSONObject temp = new JSONObject();
 						temp.put("testcase", ts.getJSONArray("testcase").getJSONObject(index));
-						getTestObject(temp, indent + 1, list);
+						fail = getTestObject(temp, indent + 1, list) || fail;
 					}
 				}
 			}
+			// if some child is fail this is also fail 
+			if (fail)
+				to.setFail();
 
-			//System.out.println("Suite");
+			return fail;
 		}
 		// TestCase
 		else if (jo.has("testcase")) {
@@ -145,9 +154,13 @@ public class ConvertJsonToTestObject {
 			
 			// add failure or error
 			if (to.getChildren() > 0) {
-				getTestObject(tc, indent + 1, list);
+				fail = getTestObject(tc, indent + 1, list);
 			}
-			//System.out.println("Case");
+			
+			if (fail)
+				to.setFail();
+			
+			return fail;
 		}
 		else if (jo.has("failure") || jo.has("error")) {
 			String fe;
@@ -162,22 +175,26 @@ public class ConvertJsonToTestObject {
 			}
 			
 			String[] lines = fe.split("&#13;");
-			System.out.println(lines.length);
+			//System.out.println(lines.length);
 			
-//			System.out.println(lines[0]);
-//			System.out.println(lines[1]);
 			// create object
-			TestObject to = new TestObject(((failure) ? TestObject.Type.failure : TestObject.Type.error), name, indent);
+			TestObject.Type type = (failure) ? TestObject.Type.failure : TestObject.Type.error;
+			TestObject to = new TestObject(type, name, indent);
 			
 			to.setPostTitle(lines[0]);
 			for (int i = 1; i < lines.length; i++)
 				to.addLine(lines[i]);
 			
+			to.setFail();
+			
 			// add object
 			list.add(to);
-			
+			return true;
 			
 		}
+		
+		System.err.println("Error !! Dont machet type.");
+		return fail;
 
 	}
 }
