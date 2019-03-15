@@ -1,27 +1,16 @@
 package reportJUnitJava;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import javax.swing.BoxLayout;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,9 +59,13 @@ public class Program extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == start) {
-			Integer returnVal = fileChooser.showOpenDialog(this);
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				currentFile = fileChooser.getSelectedFile();
+			// stop choise; hardcode
+			//Integer returnVal = fileChooser.showOpenDialog(this);
+			// stop choise; hardcode
+			if (true) { //returnVal == JFileChooser.APPROVE_OPTION) {
+				// stop choise; hardcode
+				//currentFile = fileChooser.getSelectedFile();
+				currentFile = new File("TestRep2P2I2F1E.xml");
 				// This is where a real application would open the file.
 				setTitle("Report viewer : " + currentFile.getName());
 				jo = ConvertXmlToJson.convert(currentFile);
@@ -83,10 +76,11 @@ public class Program extends JFrame implements ActionListener {
 				try (FileWriter fw = new FileWriter(FileDescriptor.out)){
 					testRun = new TestRun(jo);
 					
-					
+					ArrayList<TestObject> list = ConvertJsonToTestObject.convert(jo);
 					
 					//File htmlfile = new File("example.html");
-					fw.write("Bogdan Pasterak");
+					for(TestObject to : list)
+						fw.write(to.toString());
 					
 					//Desktop.getDesktop().browse(htmlfile.toURI());
 					// System.out.println(testRun.toString());
