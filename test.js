@@ -34,12 +34,17 @@ document.querySelectorAll(".btn-expand-all-nested").forEach((button) => {
                 if (panel.getAttribute("offset") <= offset)
                     break;
                 // only 1 deep
-                if (panel.getAttribute("offset") > offset + 1)
+                //if (panel.getAttribute("offset") > offset + 1)
+                    //continue;
+                // if hiden dont do that
+                if (panel.classList.contains("hidden"))
                     continue;
                 btnOpen = panel.querySelector(".btn-expand");
-                isOpen = btnOpen.firstChild.textContent == "-";
-                if (open ? !isOpen : isOpen)    // open XOR isOpen
-                    expand(btnOpen);
+                if (btnOpen) {
+                    isOpen = btnOpen.firstChild.textContent == "-";
+                    if (open ? !isOpen : isOpen)    // open XOR isOpen
+                        expand(btnOpen);
+                }
             }
         };
     });
