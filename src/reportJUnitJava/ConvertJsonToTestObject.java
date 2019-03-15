@@ -100,7 +100,7 @@ public class ConvertJsonToTestObject {
 					to.setChildren(ts.getJSONArray("testsuite").length());
 			} else if (ts.has("testcase")) {
 				if (ts.get("testcase") instanceof JSONObject)
-					to.setChildren(1);
+					getTestObject(ts, indent + 1, list);
 				else if (ts.get("testcase") instanceof JSONArray)
 					to.setChildren(ts.getJSONArray("testcase").length());
 			}
