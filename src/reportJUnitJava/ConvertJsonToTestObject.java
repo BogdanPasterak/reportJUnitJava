@@ -5,6 +5,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import reportJUnitJava.TestObject.Type;
+
 public class ConvertJsonToTestObject {
 
 	public static ArrayList<TestObject> convert(JSONObject jo) throws JSONException{
@@ -21,6 +23,7 @@ public class ConvertJsonToTestObject {
 		//System.out.println(jo);
 		String name;
 		
+		// TestRun
 		if (jo.has("testrun")) {
 			JSONObject tr = jo.getJSONObject("testrun");
 			name = "Name: " + tr.getString("name");
@@ -56,7 +59,9 @@ public class ConvertJsonToTestObject {
 			if (tr.has("testsuite") && tr.get("testsuite") instanceof JSONObject)
 				getTestObject(tr, 1, list);
 			
-		} else if (jo.has("testsuite")) {
+		} 
+		// TestSuite
+		else if (jo.has("testsuite")) {
 			JSONObject ts = jo.getJSONObject("testsuite");
 			name = "Name: " + ts.getString("name");
 			// create object
@@ -101,11 +106,78 @@ public class ConvertJsonToTestObject {
 			} else if (ts.has("testcase")) {
 				if (ts.get("testcase") instanceof JSONObject)
 					getTestObject(ts, indent + 1, list);
-				else if (ts.get("testcase") instanceof JSONArray)
-					to.setChildren(ts.getJSONArray("testcase").length());
+				else if (ts.get("testcase") instanceof JSONArray) {
+					for (int index = 0; index < ts.getJSONArray("testcase").length(); index++) {
+						JSONObject temp = new JSONObject();
+						temp.put("testcase", ts.getJSONArray("testcase").getJSONObject(index));
+						getTestObject(temp, indent + 1, list);
+					}
+				}
 			}
 
 			//System.out.println("Suite");
 		}
+		// TestCase
+		else if (jo.has("testcase")) {
+			JSONObject tc = jo.getJSONObject("testcase");
+			name = "Name: " + tc.getString("name");
+			// create object
+			TestObject to = new TestObject(TestObject.Type.testcase, name, indent);
+			// class name
+			if (tc.has("classname"))
+				to.setPreTitle("ClassName: " + tc.getString("classname"));
+			// children
+			if (tc.has("failure") || tc.has("error"))
+				to.setChildren(1);
+			// property time in ms
+			if (tc.has("time"))
+				to.addProperty("Time: " + (String.valueOf((int)(tc.getDouble("time") * 1000 ))) + " ms");
+			if (tc.has("ignored"))
+				to.addProperty("Ignored: " + String.valueOf(tc.getBoolean("ignored")));
+			
+			// buttons
+			to.setBtnPlus();
+			if (to.getChildren() > 0)
+				to.setBtnDown();
+						
+			// add object
+			list.add(to);
+			
+			// add failure or error
+			if (to.getChildren() > 0) {
+				getTestObject(tc, indent + 1, list);
+			}
+			//System.out.println("Case");
+		}
+		else if (jo.has("failure") || jo.has("error")) {
+			String fe;
+			boolean failure = (jo.has("failure")) ? true : false;
+			
+			if (failure) {
+				fe = jo.getString("failure");
+				name = "Failure";
+			} else {
+				fe = jo.getString("error");
+				name = "Error";
+			}
+			
+			String[] lines = fe.split("&#13;");
+			System.out.println(lines.length);
+			
+//			System.out.println(lines[0]);
+//			System.out.println(lines[1]);
+			// create object
+			TestObject to = new TestObject(((failure) ? TestObject.Type.failure : TestObject.Type.error), name, indent);
+			
+			to.setPostTitle(lines[0]);
+			for (int i = 1; i < lines.length; i++)
+				to.addLine(lines[i]);
+			
+			// add object
+			list.add(to);
+			
+			
+		}
+
 	}
 }

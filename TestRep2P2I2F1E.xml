@@ -67,9 +67,7 @@
     <testcase name="test5" classname="TestReport" time="0.002"/>
     <testcase name="test6" classname="TestReport" time="0.0"/>
     <testcase name="test7" classname="TestReport" time="0.0">
-      <error>java.lang.Error: Unresolved compilation problem: 
-	The method assertTrue(boolean) in the type Assert is not applicable for the arguments ()
-&#13;
+      <error>java.lang.Error: Unresolved compilation problem: The method assertTrue(boolean) in the type Assert is not applicable for the arguments ()&#13;
 	at TestReport.test7(TestReport.java:42)&#13;
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
