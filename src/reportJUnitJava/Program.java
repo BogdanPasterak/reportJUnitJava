@@ -79,8 +79,10 @@ public class Program extends JFrame implements ActionListener {
 					ArrayList<TestObject> list = ConvertJsonToTestObject.convert(jo);
 					
 					//File htmlfile = new File("example.html");
-					for(TestObject to : list)
-						fw.write(to.toString() + "\n");
+					for(TestObject to : list) {
+						//fw.write(to.toString() + "\n");
+						fw.write(ConvertTestObjectToHtml.convert(to));
+					}
 					
 					//Desktop.getDesktop().browse(htmlfile.toURI());
 					// System.out.println(testRun.toString());
@@ -97,5 +99,7 @@ public class Program extends JFrame implements ActionListener {
 		}
 
 	}
+	
+	
 
 }
