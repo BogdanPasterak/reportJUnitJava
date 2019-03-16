@@ -3,10 +3,7 @@ package reportJUnitJava;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -70,19 +67,30 @@ public class Program extends JFrame implements ActionListener {
 				setTitle("Report viewer : " + currentFile.getName());
 				jo = ConvertXmlToJson.convert(currentFile);
 				String newFileName = currentFile.getName();
-				newFileName = newFileName.substring(0, newFileName.length() - 3) + "html";
+				String nameFile = newFileName.substring(0, newFileName.length() - 4);
+				newFileName = nameFile + ".html";
 				//System.out.println(newFileName);
-				//					 new File(newFileName)
-				try (FileWriter fw = new FileWriter(FileDescriptor.out)){
+				//					 
+				try (	FileWriter fw = new FileWriter(new File(newFileName));// FileDescriptor.out);// to console
+						BufferedReader rs = new BufferedReader( new FileReader("start.txt"));
+						BufferedReader re = new BufferedReader( new FileReader("end.txt"))){
 					testRun = new TestRun(jo);
 					
 					ArrayList<TestObject> list = ConvertJsonToTestObject.convert(jo);
-					
+					String line;
+					// read start html doc
+					while ((line = rs.readLine()) != null)
+						fw.write(line + "\n");
+					fw.write("\t<title>Test: " + nameFile + "</title>\n");
+					fw.write("</head>\n<body>\n");
 					//File htmlfile = new File("example.html");
 					for(TestObject to : list) {
 						//fw.write(to.toString() + "\n");
 						fw.write(ConvertTestObjectToHtml.convert(to));
 					}
+					// read start html doc
+					while ((line = re.readLine()) != null)
+						fw.write(line + "\n");
 					
 					//Desktop.getDesktop().browse(htmlfile.toURI());
 					// System.out.println(testRun.toString());

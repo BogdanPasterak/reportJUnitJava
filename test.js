@@ -39,6 +39,9 @@ document.querySelectorAll(".btn-expand-all-nested").forEach((button) => {
                 // if hiden dont do that
                 if (panel.classList.contains("hidden"))
                     continue;
+                btnOpen = panel.querySelector(".btn-expand-all-nested");
+                if (btnOpen)
+                    btnOpen.firstChild.textContent = (open) ? "<" : ">";
                 btnOpen = panel.querySelector(".btn-expand");
                 if (btnOpen) {
                     isOpen = btnOpen.firstChild.textContent == "-";
@@ -146,15 +149,19 @@ function expand(srcButton) {
             var number = listCover.length;
             var h = listCover[0].offsetHeight;
             var ph = parent.offsetHeight - 10;
-            var col = Math.ceil(number / Math.floor(ph / h));
+            var row = Math.floor(ph / h);
+            var col = Math.ceil(number / row);
             var width = col;
             for (var i = 0; i < col; i++)
-                width += listCover[i * col].offsetWidth;
+                width += listCover[i * row].offsetWidth;
             sibling.style.width = width + "px";
         }
         // hidden
     } else {
         label.textContent = "+";
+        let button2 = parent.querySelector(".btn-expand-all-nested");
+        if (button2)
+            button2.firstChild.textContent = ">";
         sibling.classList.add("hidden");
     }
 };

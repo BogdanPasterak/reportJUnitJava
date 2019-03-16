@@ -38,10 +38,43 @@ public class ConvertTestObjectToHtml {
 		// preTitle
 		if (to.getPostTitle() != null)
 			s += "\t\t\t<h4>" + to.getPostTitle() + "</h4>\n";
-
-		
+		// bottom buttons
+		if (to.isBtnDown() || to.isBtnAll()) {
+			s += "\t\t\t<div class=\"flow-row\">\n";
+			s += "\t\t\t\t<button class=\"btn-details\">V</button>\n";
+			if (to.isBtnAll()) {
+				s += "\t\t\t\t<p></p>\n";
+				s += "\t\t\t\t<p>" + to.getChildren() + "</p>\n";
+				s += "\t\t\t\t<p></p>\n";
+				s += "\t\t\t\t<button class=\"btn-details-all\">VVV</button>\n";
+			}
+			s += "\t\t\t</div>\n";
+		}
+		// errors lines
+		if (type.equals("fe"))
+			for(String line : to.getLines())
+				s += "\t\t\t<p>" + line + "</p>\n";
+		// end main
 		s += "\t\t</div>\n";
+		// expand
+		if (!type.equals("fe")) {
+			s += "\t\t<div class=\"expand\">\n";
+			s += "\t\t\t<button class=\"btn-expand\">+</button>\n";
+			if (to.isBtnRight()) {
+				s += "\t\t\t<br/>\n";
+				s += "\t\t\t<button class=\"btn-expand-all-nested\">&gt;</button>\n";
+			}
+			s += "\t\t</div>\n";
+			s += "\t\t<div class=\"extra hidden\">\n";
+			for(String property : to.getPropertys()) {
+				s += "\t\t\t<div class=\"cover\">\n";
+				s += "\t\t\t\t<p>" + property + "</p>\n";
+				s += "\t\t\t</div>\n";
+			}
+			s += "\t\t</div>\n";
+		}
 		s += "\t</div>\n";
+		
 		return s;
 	}
 }
