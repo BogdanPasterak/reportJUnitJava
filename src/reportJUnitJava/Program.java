@@ -57,12 +57,12 @@ public class Program extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == start) {
 			// stop choise; hardcode
-			//Integer returnVal = fileChooser.showOpenDialog(this);
+			Integer returnVal = fileChooser.showOpenDialog(this);
 			// stop choise; hardcode
-			if (true) { //returnVal == JFileChooser.APPROVE_OPTION) {
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				// stop choise; hardcode
-				//currentFile = fileChooser.getSelectedFile();
-				currentFile = new File("TestRep2P2I2F1E.xml");//"AllTests.xml");//
+				currentFile = fileChooser.getSelectedFile();
+				//currentFile = new File("TestRep2P2I2F1E.xml");//"AllTests.xml");//
 				// This is where a real application would open the file.
 				setTitle("Report viewer : " + currentFile.getName());
 				jo = ConvertXmlToJson.convert(currentFile);
