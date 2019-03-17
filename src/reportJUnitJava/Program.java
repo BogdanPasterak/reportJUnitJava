@@ -1,5 +1,6 @@
 package reportJUnitJava;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,7 +85,7 @@ public class Program extends JFrame implements ActionListener {
 						fw.write(line + "\n");
 					fw.write("\t<title>Test: " + nameFile + "</title>\n");
 					fw.write("</head>\n<body>\n");
-					//File htmlfile = new File("example.html");
+
 					for(TestObject to : list) {
 						//fw.write(to.toString() + "\n");
 						fw.write(ConvertTestObjectToHtml.convert(to));
@@ -92,16 +94,25 @@ public class Program extends JFrame implements ActionListener {
 					while ((line = re.readLine()) != null)
 						fw.write(line + "\n");
 					
-					//Desktop.getDesktop().browse(htmlfile.toURI());
-					// System.out.println(testRun.toString());
-					//testPanel = new TestPanel(testRun, container);
-					pack();
-					this.dispose();
+					fw.close();
+					
+				
+					int n = JOptionPane.showConfirmDialog(
+						    this, "Do you want to see\n\"" + newFileName + "\" now?",
+						    "Test presenter", JOptionPane.YES_NO_OPTION);
+					
+					if (n == 0) {
+						File htmlfile = new File(newFileName);
+						Desktop.getDesktop().browse(htmlfile.toURI());
+					}
+					
 				} catch (ReportJUnitException | JSONException | NullPointerException | IOException e1) {
 					this.setTitle("Report viewer");
 					//label.setForeground(Color.RED);
 					//label.setText("Error: " + e1.getMessage());
 				}
+				this.dispose();
+
 			}
 
 		}

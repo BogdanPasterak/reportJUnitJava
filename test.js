@@ -78,8 +78,11 @@ function show(srcButton) {
     let currentBtn;
 
     for (let block of document.querySelectorAll('div[offset="' + offset + '"]'))
-        if ((currentNumber = parseInt(block.getAttribute("id").substring(2))) > number)
+        if ((currentNumber = parseInt(block.getAttribute("id").substring(2))) > number){
             limit = currentNumber;
+            break;
+        }
+
     if (all) {
         if (open){
             srcButton.textContent = "AAA";
