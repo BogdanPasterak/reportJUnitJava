@@ -173,18 +173,29 @@ public class ConvertJsonToTestObject {
 				fe = jo.getString("error");
 				name = "Error";
 			}
-			
-			String[] lines = fe.split("&#13;");
-			//System.out.println(lines.length);
-			
+			String[] lines = null;
+			if (fe.contains("&#13;"))
+				lines = fe.split("&#13;");
+			else if (fe.contains("\t"))
+				lines = fe.split("\t");
+			else {
+				System.out.println(fe);
+				if (fe.charAt(23) == 'r') {
+					System.out.println(fe.substring(23, 31));
+					
+					for (int i = 23; i < 31; i++) {
+						System.out.println((int)fe.charAt(i));
+					}
+				}
+			}
 			// create object
 			TestObject.Type type = (failure) ? TestObject.Type.failure : TestObject.Type.error;
 			TestObject to = new TestObject(type, name, indent);
-			
-			to.setPostTitle(lines[0]);
-			for (int i = 1; i < lines.length; i++)
-				to.addLine(lines[i]);
-			
+			if (lines != null) {
+				to.setPostTitle(lines[0]);
+				for (int i = 1; i < lines.length; i++)
+					to.addLine(lines[i]);
+			}
 			to.setFail();
 			
 			// add object

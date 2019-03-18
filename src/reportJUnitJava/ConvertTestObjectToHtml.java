@@ -51,7 +51,7 @@ public class ConvertTestObjectToHtml {
 			s += "\t\t\t</div>\n";
 		}
 		// errors lines
-		if (type.equals("fe"))
+		if (to.getLines() != null)
 			for(String line : to.getLines())
 				s += "\t\t\t<p>" + line + "</p>\n";
 		// end main

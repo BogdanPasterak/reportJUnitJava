@@ -12,6 +12,14 @@ public class TestToTest {
 		assertTrue(true);
 	}
 	
+	@Test
+	public void testPassWithMoreTests() {
+		assertTrue(true);
+		assertFalse(false);
+		assertEquals(5, 5);
+		assertNull(null);
+	}
+	
 	@Ignore
 	@Test
 	public void testIgnore() {
@@ -21,6 +29,11 @@ public class TestToTest {
 	@Test
 	public void testFail() {
 		assertTrue(false);
+	}
+
+	@Test
+	public void testError() {
+		assertTrue();
 	}
 
 }

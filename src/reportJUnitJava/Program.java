@@ -72,8 +72,8 @@ public class Program extends JFrame implements ActionListener {
 				String nameFile = newFileName.substring(0, newFileName.length() - 4);
 				newFileName = nameFile + ".html";
 				//System.out.println(newFileName);
-				//					 
-				try (	FileWriter fw = new FileWriter(new File(newFileName));// FileDescriptor.out);// to console
+				//					 				   FileDescriptor.out);//
+				try (	FileWriter fw = new FileWriter(new File(newFileName));//  to console
 						BufferedReader rs = new BufferedReader( new FileReader("start.txt"));
 						BufferedReader re = new BufferedReader( new FileReader("end.txt"))){
 					testRun = new TestRun(jo);
@@ -108,6 +108,7 @@ public class Program extends JFrame implements ActionListener {
 					
 				} catch (ReportJUnitException | JSONException | NullPointerException | IOException e1) {
 					this.setTitle("Report viewer");
+					e1.printStackTrace();
 					//label.setForeground(Color.RED);
 					//label.setText("Error: " + e1.getMessage());
 				}

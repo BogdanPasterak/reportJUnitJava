@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="TestToTest" project="ReportJUnitJava" tests="5" started="5" failures="1" errors="1" ignored="1">
-  <testsuite name="testReportJUnitJava.TestToTest" time="0.003">
-    <testcase name="testError" classname="testReportJUnitJava.TestToTest" time="0.002">
-      <error>java.lang.Error: Unresolved compilation problem: 
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AllTestsFalseAndPass" project="ReportJUnitJava" tests="10" started="10" failures="1" errors="1" ignored="1">
+  <testsuite name="testReportJUnitJava.AllTestsFalseAndPass" time="0.001">
+    <testsuite name="testReportJUnitJava.TestToTest" time="0.001">
+      <testcase name="testError" classname="testReportJUnitJava.TestToTest" time="0.001">
+        <error>java.lang.Error: Unresolved compilation problem: 
 	The method assertTrue(boolean) in the type Assert is not applicable for the arguments ()
 
 	at testReportJUnitJava.TestToTest.testError(TestToTest.java:36)
@@ -22,6 +23,14 @@
 	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
 	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
 	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:89)
 	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:41)
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:541)
@@ -30,9 +39,9 @@
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:209)
 
 </error>
-    </testcase>
-    <testcase name="testFail" classname="testReportJUnitJava.TestToTest" time="0.0">
-      <failure>java.lang.AssertionError
+      </testcase>
+      <testcase name="testFail" classname="testReportJUnitJava.TestToTest" time="0.0">
+        <failure>java.lang.AssertionError
 	at org.junit.Assert.fail(Assert.java:86)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at org.junit.Assert.assertTrue(Assert.java:52)
@@ -54,6 +63,14 @@
 	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
 	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
 	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:89)
 	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:41)
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:541)
@@ -62,9 +79,17 @@
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:209)
 
 </failure>
-    </testcase>
-    <testcase name="testPass" classname="testReportJUnitJava.TestToTest" time="0.0"/>
-    <testcase name="testPassWithMoreTests" classname="testReportJUnitJava.TestToTest" time="0.001"/>
-    <testcase name="testIgnore" classname="testReportJUnitJava.TestToTest" time="0.0" ignored="true"/>
+      </testcase>
+      <testcase name="testPass" classname="testReportJUnitJava.TestToTest" time="0.0"/>
+      <testcase name="testPassWithMoreTests" classname="testReportJUnitJava.TestToTest" time="0.0"/>
+      <testcase name="testIgnore" classname="testReportJUnitJava.TestToTest" time="0.0" ignored="true"/>
+    </testsuite>
+    <testsuite name="testReportJUnitJava.TestWithAllTestsPass" time="0.0">
+      <testcase name="testFalse" classname="testReportJUnitJava.TestWithAllTestsPass" time="0.0"/>
+      <testcase name="testNull" classname="testReportJUnitJava.TestWithAllTestsPass" time="0.0"/>
+      <testcase name="testTrue" classname="testReportJUnitJava.TestWithAllTestsPass" time="0.0"/>
+      <testcase name="testEquals" classname="testReportJUnitJava.TestWithAllTestsPass" time="0.0"/>
+      <testcase name="testNotNull" classname="testReportJUnitJava.TestWithAllTestsPass" time="0.0"/>
+    </testsuite>
   </testsuite>
 </testrun>
