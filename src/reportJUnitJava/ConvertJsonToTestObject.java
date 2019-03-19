@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 
 public class ConvertJsonToTestObject {
+	public static final String[] TYPE = { "testrun", "testsuite", "testcase", "failure", "error" };
 
 	public static ArrayList<TestObject> convert(JSONObject jo) throws JSONException{
 		ArrayList<TestObject> list = new ArrayList<>();
@@ -15,7 +16,44 @@ public class ConvertJsonToTestObject {
 		//list.add(new TestObject(TestObject.Type.testrun, "Name: TestReport", 0));
 		getTestObject(jo, 0, list);
 		
+		buildListTestObject(0, jo.getJSONObject(TYPE[0]), 0, list);
+		
 		return list;
+		
+	}
+
+	private static boolean buildListTestObject(int type, JSONObject jo, int indent, ArrayList<TestObject> list) throws JSONException {
+		boolean fail = false; // if fail colour red
+		
+		// name is almost always name
+		String name;
+		if (type < 3)
+			name = "Name: " +  jo.getString("name");
+		else if (type == 3)
+			name = "Failure";
+		else 
+			name = "Error";
+		
+		// create object
+		TestObject to = new TestObject(type, name, indent);
+		
+		// children
+		if ((type == 0) || (type == 2 && (jo.has(TYPE[3]) || jo.has(TYPE[4]))))	// testrun  or... testcase with failure or error
+			to.setChildren(1);
+		else if (type == 1 && jo.has(TYPE[1])) {				// testsuite with testsuite
+			if (jo.get(TYPE[1]) instanceof JSONObject)
+				to.setChildren(1);
+			else if (jo.get(TYPE[1]) instanceof JSONArray)
+				to.setChildren(jo.getJSONArray(TYPE[1]).length());
+		} else if (type == 1 && jo.has(TYPE[2])) {				// testsuite with testsuite
+			if (jo.get(TYPE[2]) instanceof JSONObject)
+				to.setChildren(1);
+			else if (jo.get(TYPE[2]) instanceof JSONArray)
+				to.setChildren(jo.getJSONArray(TYPE[2]).length());
+		}
+		
+		
+		return fail;
 	}
 
 	private static boolean getTestObject(JSONObject jo, int indent, ArrayList<TestObject> list) throws JSONException {
