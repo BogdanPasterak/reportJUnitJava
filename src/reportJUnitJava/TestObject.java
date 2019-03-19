@@ -3,8 +3,9 @@ package reportJUnitJava;
 import java.util.ArrayList;
 
 public class TestObject {
+	public static final String[] TYPE = { "testrun", "testsuite", "testcase", "failure", "error" };
 
-	private Type type;
+	private int type;
 	private int indent;
 	private int children;
 	private String preTitle;
@@ -18,7 +19,7 @@ public class TestObject {
 	private boolean btnAll;	
 	private boolean fail;
 	
-	public TestObject (Type type,String title, int indent) {
+	public TestObject (int type,String title, int indent) {
 		this.type = type;
 		this.title = title;
 		this.indent = indent;
@@ -42,11 +43,11 @@ public class TestObject {
 				((fail) ? ", Fail" : "") + "}";
 	}
 	
-	public Type getType() {
-		return type;
+	public String getType() {
+		return TYPE[type];
 	}
 
-	public void setType(Type type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 
@@ -150,5 +151,4 @@ public class TestObject {
 		this.fail = true;
 	}
 
-	public static enum Type { testrun, testsuite, testcase, failure, error }
 }

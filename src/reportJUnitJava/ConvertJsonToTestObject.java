@@ -5,7 +5,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import reportJUnitJava.TestObject.Type;
 
 public class ConvertJsonToTestObject {
 
@@ -29,7 +28,7 @@ public class ConvertJsonToTestObject {
 			JSONObject tr = jo.getJSONObject("testrun");
 			name = "Name: " + tr.getString("name");
 			// create object
-			TestObject to = new TestObject(TestObject.Type.testrun, name, 0);
+			TestObject to = new TestObject(0, name, 0);
 			// children - must have 1
 			if (tr.has("testsuite"))
 				to.setChildren(1);
@@ -71,7 +70,7 @@ public class ConvertJsonToTestObject {
 			JSONObject ts = jo.getJSONObject("testsuite");
 			name = "Name: " + ts.getString("name");
 			// create object
-			TestObject to = new TestObject(TestObject.Type.testsuite, name, indent);
+			TestObject to = new TestObject(1, name, indent);
 			// children
 			if (ts.has("testsuite")) {
 				if (ts.get("testsuite") instanceof JSONObject)
@@ -131,7 +130,7 @@ public class ConvertJsonToTestObject {
 			JSONObject tc = jo.getJSONObject("testcase");
 			name = "Name: " + tc.getString("name");
 			// create object
-			TestObject to = new TestObject(TestObject.Type.testcase, name, indent);
+			TestObject to = new TestObject(2, name, indent);
 			// class name
 			if (tc.has("classname"))
 				to.setPreTitle("ClassName: " + tc.getString("classname"));
@@ -189,7 +188,7 @@ public class ConvertJsonToTestObject {
 				}
 			}
 			// create object
-			TestObject.Type type = (failure) ? TestObject.Type.failure : TestObject.Type.error;
+			int type = (failure) ? 3 : 4;
 			TestObject to = new TestObject(type, name, indent);
 			if (lines != null) {
 				to.setPostTitle(lines[0]);
