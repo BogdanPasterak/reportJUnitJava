@@ -7,242 +7,144 @@ import org.json.JSONObject;
 
 
 public class ConvertJsonToTestObject {
-	public static final String[] TYPE = { "testrun", "testsuite", "testcase", "failure", "error" };
+	//public static final String[] TYPE = { "testrun", "testsuite", "testcase", "failure", "error" };
 
 	public static ArrayList<TestObject> convert(JSONObject jo) throws JSONException{
 		ArrayList<TestObject> list = new ArrayList<>();
 		
 		// test
 		//list.add(new TestObject(TestObject.Type.testrun, "Name: TestReport", 0));
-		getTestObject(jo, 0, list);
-		
-		buildListTestObject(0, jo.getJSONObject(TYPE[0]), 0, list);
+		//getTestObject(jo, 0, list);
+				
+		if (jo.has(Type.testrun.toString()) && jo.get(Type.testrun.toString()) instanceof JSONObject)
+			buildListTestObject(Type.testrun, jo.getJSONObject(Type.testrun.toString()), 0, list);
 		
 		return list;
 		
 	}
 
-	private static boolean buildListTestObject(int type, JSONObject jo, int indent, ArrayList<TestObject> list) throws JSONException {
+	private static boolean buildListTestObject(Type type, JSONObject jo, int indent, ArrayList<TestObject> list) throws JSONException {
 		boolean fail = false; // if fail colour red
+		String typeInS;
+		Type typeIn;
+		boolean array = false;
 		
 		// name is almost always name
 		String name;
-		if (type < 3)
+		if (type.isTest())
 			name = "Name: " +  jo.getString("name");
-		else if (type == 3)
+		else if (type == Type.failure)
 			name = "Failure";
-		else 
+		else if (type == Type.error)
 			name = "Error";
+		else
+			name = "Unknown";
 		
+		// check nested Type
+		if (jo.has(Type.testsuite.toString()))
+			typeIn = Type.testsuite;
+		else if (jo.has(Type.testcase.toString()))
+			typeIn = Type.testcase;
+		else if (jo.has(Type.failure.toString()))
+			typeIn = Type.failure;
+		else if (jo.has(Type.error.toString()))
+			typeIn = Type.error;
+		else
+			typeIn = Type.none;
+
+		typeInS = typeIn.toString();
+
+		if (typeIn != Type.none)
+			array = jo.get(typeInS) instanceof JSONArray;
+		
+
 		// create object
 		TestObject to = new TestObject(type, name, indent);
 		
-		// children
-		if ((type == 0) || (type == 2 && (jo.has(TYPE[3]) || jo.has(TYPE[4]))))	// testrun  or... testcase with failure or error
+		// check and count children
+		if (type == Type.testrun || typeIn == Type.failure || typeIn == Type.error)	// testrun  or testcase with failure or error
 			to.setChildren(1);
-		else if (type == 1 && jo.has(TYPE[1])) {				// testsuite with testsuite
-			if (jo.get(TYPE[1]) instanceof JSONObject)
+		else if (typeIn == Type.testsuite || typeIn == Type.testcase ) {			// testsuite with testsuite or testcase
+			if (! array)
 				to.setChildren(1);
-			else if (jo.get(TYPE[1]) instanceof JSONArray)
-				to.setChildren(jo.getJSONArray(TYPE[1]).length());
-		} else if (type == 1 && jo.has(TYPE[2])) {				// testsuite with testsuite
-			if (jo.get(TYPE[2]) instanceof JSONObject)
-				to.setChildren(1);
-			else if (jo.get(TYPE[2]) instanceof JSONArray)
-				to.setChildren(jo.getJSONArray(TYPE[2]).length());
+			else
+				to.setChildren(jo.getJSONArray(typeInS).length());
 		}
 		
 		
-		return fail;
-	}
-
-	private static boolean getTestObject(JSONObject jo, int indent, ArrayList<TestObject> list) throws JSONException {
-		//System.out.println(jo);
-		String name;
-		boolean fail = false;
-		
-		// TestRun
-		if (jo.has("testrun")) {
-			JSONObject tr = jo.getJSONObject("testrun");
-			name = "Name: " + tr.getString("name");
-			// create object
-			TestObject to = new TestObject(0, name, 0);
-			// children - must have 1
-			if (tr.has("testsuite"))
-				to.setChildren(1);
-			// project name
-			if (tr.has("project"))
-				to.setPreTitle("Project: " + tr.getString("project"));
-			// propertys
-			if (tr.has("tests"))
-				to.addProperty("Tests: " + String.valueOf(tr.getInt("tests")));
-			if (tr.has("started"))
-				to.addProperty("Started: " + String.valueOf(tr.getInt("started")));
-			if (tr.has("ignored"))
-				to.addProperty("Ignored: " + String.valueOf(tr.getInt("ignored")));
-			if (tr.has("failures"))
-				to.addProperty("Failures: " + String.valueOf(tr.getInt("failures")));
-			if (tr.has("errors"))
-				to.addProperty("Errors: " + String.valueOf(tr.getInt("errors")));
-			// buttons
-			to.setBtnPlus();
-			to.setBtnRight();
-			to.setBtnDown();
-			to.setBtnAll();
+		// propertys
+		if (jo.has("tests"))
+			to.addProperty("Tests: " + String.valueOf(jo.getInt("tests")));
+		if (jo.has("started"))
+			to.addProperty("Started: " + String.valueOf(jo.getInt("started")));
+		if (jo.has("ignored")) 
+			to.addProperty("Ignored: " + jo.get("ignored").toString());
+		if (jo.has("failures"))
+			to.addProperty("Failures: " + String.valueOf(jo.getInt("failures")));
+		if (jo.has("errors"))
+			to.addProperty("Errors: " + String.valueOf(jo.getInt("errors")));
+		if (jo.has("time"))
+			to.addProperty("Time: " + (String.valueOf((int)(jo.getDouble("time") * 1000 ))) + " ms");
+		// Pre title
+		if (jo.has("classname"))
+			to.setPreTitle("ClassName: " + jo.getString("classname"));
+		if (jo.has("project"))
+			to.setPreTitle("Project: " + jo.getString("project"));
+		// error or failure
+		if (jo.has("details")) {
+			String fe = jo.getString("details");
+			String[] lines = new String[1];
 			
-			// add object
-			list.add(to);
-			
-			// recursive add testsuite
-			if (tr.has("testsuite") && tr.get("testsuite") instanceof JSONObject)
-				fail = getTestObject(tr, 1, list);
-			
-			if (fail)
-				to.setFail();
-
-			return fail;
-			
-		} 
-		// TestSuite
-		else if (jo.has("testsuite")) {
-			JSONObject ts = jo.getJSONObject("testsuite");
-			name = "Name: " + ts.getString("name");
-			// create object
-			TestObject to = new TestObject(1, name, indent);
-			// children
-			if (ts.has("testsuite")) {
-				if (ts.get("testsuite") instanceof JSONObject)
-					to.setChildren(1);
-				else if (ts.get("testsuite") instanceof JSONArray)
-					to.setChildren(ts.getJSONArray("testsuite").length());
-			} else if (ts.has("testcase")) {
-				if (ts.get("testcase") instanceof JSONObject)
-					to.setChildren(1);
-				else if (ts.get("testcase") instanceof JSONArray)
-					to.setChildren(ts.getJSONArray("testcase").length());
-			}
-			// property time in ms
-			if (ts.has("time"))
-				to.addProperty("Time: " + (String.valueOf((int)(ts.getDouble("time") * 1000 ))) + " ms");
-			
-			// buttons
-			to.setBtnPlus();
-			to.setBtnRight();
-			to.setBtnDown();
-			to.setBtnAll();
-			
-			// add object
-			list.add(to);
-
-			// recursive add testsuite or testcase
-			if (ts.has("testsuite")) {
-				if (ts.get("testsuite") instanceof JSONObject)
-					fail = getTestObject(ts, indent + 1, list);
-				else if (ts.get("testsuite") instanceof JSONArray) {
-					for (int index = 0; index < ts.getJSONArray("testsuite").length(); index++) {
-						JSONObject temp = new JSONObject();
-						temp.put("testsuite", ts.getJSONArray("testsuite").getJSONObject(index));
-						fail = getTestObject(temp, indent + 1, list) || fail;
-					}
-				}
-					to.setChildren(ts.getJSONArray("testsuite").length());
-			} else if (ts.has("testcase")) {
-				if (ts.get("testcase") instanceof JSONObject)
-					fail = getTestObject(ts, indent + 1, list);
-				else if (ts.get("testcase") instanceof JSONArray) {
-					for (int index = 0; index < ts.getJSONArray("testcase").length(); index++) {
-						JSONObject temp = new JSONObject();
-						temp.put("testcase", ts.getJSONArray("testcase").getJSONObject(index));
-						fail = getTestObject(temp, indent + 1, list) || fail;
-					}
-				}
-			}
-			// if some child is fail this is also fail 
-			if (fail)
-				to.setFail();
-
-			return fail;
-		}
-		// TestCase
-		else if (jo.has("testcase")) {
-			JSONObject tc = jo.getJSONObject("testcase");
-			name = "Name: " + tc.getString("name");
-			// create object
-			TestObject to = new TestObject(2, name, indent);
-			// class name
-			if (tc.has("classname"))
-				to.setPreTitle("ClassName: " + tc.getString("classname"));
-			// children
-			if (tc.has("failure") || tc.has("error"))
-				to.setChildren(1);
-			// property time in ms
-			if (tc.has("time"))
-				to.addProperty("Time: " + (String.valueOf((int)(tc.getDouble("time") * 1000 ))) + " ms");
-			if (tc.has("ignored"))
-				to.addProperty("Ignored: " + String.valueOf(tc.getBoolean("ignored")));
-			
-			// buttons
-			to.setBtnPlus();
-			if (to.getChildren() > 0)
-				to.setBtnDown();
-						
-			// add object
-			list.add(to);
-			
-			// add failure or error
-			if (to.getChildren() > 0) {
-				fail = getTestObject(tc, indent + 1, list);
-			}
-			
-			if (fail)
-				to.setFail();
-			
-			return fail;
-		}
-		else if (jo.has("failure") || jo.has("error")) {
-			String fe;
-			boolean failure = (jo.has("failure")) ? true : false;
-			
-			if (failure) {
-				fe = jo.getString("failure");
-				name = "Failure";
-			} else {
-				fe = jo.getString("error");
-				name = "Error";
-			}
-			String[] lines = null;
 			if (fe.contains("&#13;"))
 				lines = fe.split("&#13;");
 			else if (fe.contains("\t"))
 				lines = fe.split("\t");
 			else {
-				System.out.println(fe);
-				if (fe.charAt(23) == 'r') {
-					System.out.println(fe.substring(23, 31));
-					
-					for (int i = 23; i < 31; i++) {
-						System.out.println((int)fe.charAt(i));
-					}
-				}
+				System.err.println("I can not divide messages in error / failure");
+				lines[0] = fe;
 			}
-			// create object
-			int type = (failure) ? 3 : 4;
-			TestObject to = new TestObject(type, name, indent);
-			if (lines != null) {
-				to.setPostTitle(lines[0]);
-				for (int i = 1; i < lines.length; i++)
-					to.addLine(lines[i]);
-			}
-			to.setFail();
+			// create lines message
+			to.setPostTitle(lines[0]);
+			for (int i = 1; i < lines.length; i++)
+				to.addLine(lines[i]);
 			
-			// add object
-			list.add(to);
-			return true;
-			
+			fail = true;
+		}
+
+		// buttons
+		if (type.isTest()) {
+			to.setBtnPlus();
+			if (to.getChildren() > 0) {
+				to.setBtnDown();
+				if (to.getChildren() > 1 || type == Type.testrun) {
+					to.setBtnAll();
+					to.setBtnRight();
+				} else if (type != Type.testcase) 
+					to.setBtnRight();
+			}	
 		}
 		
-		System.err.println("Error !! Dont machet type.");
-		return fail;
+		list.add(to);
+		
+		// build dependent test object
+		if (to.getChildren() > 0) {
+			if (typeIn == Type.testsuite || typeIn == Type.testcase) {
+				if (array)
+					for (int index = 0; index < jo.getJSONArray(typeInS).length(); index++)
+						fail = buildListTestObject(typeIn, jo.getJSONArray(typeInS).getJSONObject(index), indent + 1, list) || fail;
+				else
+					fail = buildListTestObject(typeIn, jo.getJSONObject(typeInS), indent + 1, list);
+			} else if (typeIn == Type.failure || typeIn == Type.error) {
+				JSONObject temp = new JSONObject().put("details", jo.getString(typeInS));
+				fail = buildListTestObject(typeIn, temp, indent + 1, list);
+			}
+		}
 
+		// set color if any child is fail
+		if (fail)
+			to.setFail();
+		
+		return fail;
 	}
+
 }
