@@ -10,21 +10,24 @@ public class Start {
 
 	File currentFile;
 	JSONObject jsonObject;
-	
-	private static JFileChooser fileChooser;
-	
-	private Start() {
-			initFileChooser();
-			if (fileChooser.showOpenDialog(null) == 0) {
-				// choosing file to convert
-				currentFile = fileChooser.getSelectedFile();
-				// read file and transform to JSON object
-				jsonObject = ConvertXmlToJson.convert(currentFile);
 
-				System.out.println(jsonObject);
-			} 
+	private static JFileChooser fileChooser;
+
+	private Start() {
+		initFileChooser();
+		if (fileChooser.showOpenDialog(null) == 0) {
+			// choosing file to convert
+			currentFile = fileChooser.getSelectedFile();
+			// read file and transform to JSON object
+			jsonObject = ConvertXmlToJson.convert(currentFile);
+
+			String newFileName = currentFile.getName();
+			newFileName = newFileName.substring(0, newFileName.length() - 3) + "html";
+					
+			System.out.println(newFileName);
+		}
 	}
-	
+
 	public static void main(String[] args) {
 		new Start();
 	}
