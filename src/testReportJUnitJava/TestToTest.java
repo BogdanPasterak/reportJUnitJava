@@ -33,7 +33,7 @@ public class TestToTest {
 
 	@Test
 	public void testError() {
-		assertTrue();
+		//assertTrue();
 	}
 
 }
