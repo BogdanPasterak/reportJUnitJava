@@ -1,6 +1,7 @@
 package reportJUnitJava;
 
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -10,6 +11,7 @@ public class Start {
 
 	File currentFile;
 	JSONObject jsonObject;
+	ArrayList<TestObject> testObjectList;
 
 	private static JFileChooser fileChooser;
 
@@ -20,9 +22,13 @@ public class Start {
 			currentFile = fileChooser.getSelectedFile();
 			// read file and transform to JSON object
 			jsonObject = ConvertXmlToJson.convert(currentFile);
-
+			
+			testObjectList = ConvertJsonToTestObject.convert(jsonObject);
+			
 			String newFileName = currentFile.getName();
 			newFileName = newFileName.substring(0, newFileName.length() - 3) + "html";
+			
+			
 					
 			System.out.println(newFileName);
 		}

@@ -9,15 +9,20 @@ import org.json.JSONObject;
 public class ConvertJsonToTestObject {
 	//public static final String[] TYPE = { "testrun", "testsuite", "testcase", "failure", "error" };
 
-	public static ArrayList<TestObject> convert(JSONObject jo) throws JSONException{
+	public static ArrayList<TestObject> convert(JSONObject jo){
 		ArrayList<TestObject> list = new ArrayList<>();
 		
 		// test
 		//list.add(new TestObject(TestObject.Type.testrun, "Name: TestReport", 0));
 		//getTestObject(jo, 0, list);
 				
-		if (jo.has(Type.testrun.toString()) && jo.get(Type.testrun.toString()) instanceof JSONObject)
-			buildListTestObject(Type.testrun, jo.getJSONObject(Type.testrun.toString()), 0, list);
+		try {
+			if (jo.has(Type.testrun.toString()) && jo.get(Type.testrun.toString()) instanceof JSONObject)
+				buildListTestObject(Type.testrun, jo.getJSONObject(Type.testrun.toString()), 0, list);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return list;
 		
