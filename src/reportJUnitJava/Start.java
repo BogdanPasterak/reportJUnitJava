@@ -10,6 +10,7 @@ import org.json.JSONObject;
 public class Start {
 
 	File currentFile;
+	static FileNameExtensionFilter extension;
 	JSONObject jsonObject;
 	ArrayList<TestObject> testObjectList;
 
@@ -27,6 +28,13 @@ public class Start {
 			
 			String newFileName = currentFile.getName();
 			newFileName = newFileName.substring(0, newFileName.length() - 3) + "html";
+			currentFile = new File(newFileName);
+			fileChooser.setDialogTitle("Seve converted file");
+			fileChooser.setSelectedFile(currentFile);
+			fileChooser.removeChoosableFileFilter(extension);
+			extension = new FileNameExtensionFilter("HTML Files", "html");
+			fileChooser.addChoosableFileFilter(extension);
+			fileChooser.showOpenDialog(null);
 			
 			
 					
@@ -40,7 +48,9 @@ public class Start {
 
 	private static void initFileChooser() {
 		fileChooser = new JFileChooser(new File(System.getProperty("user.dir")));
-		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
+		fileChooser.setDialogTitle("Open file to convert");
+		extension = new FileNameExtensionFilter("XML Files", "xml");
+		fileChooser.addChoosableFileFilter(extension);
 		fileChooser.setAcceptAllFileFilterUsed(false);
 	}
 
