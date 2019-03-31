@@ -25,20 +25,14 @@ public class Start {
 			jsonObject = ConvertXmlToJson.convert(currentFile);
 			
 			testObjectList = ConvertJsonToTestObject.convert(jsonObject);
-			
-			String newFileName = currentFile.getName();
-			newFileName = newFileName.substring(0, newFileName.length() - 3) + "html";
-			currentFile = new File(newFileName);
-			fileChooser.setDialogTitle("Seve converted file");
-			fileChooser.setSelectedFile(currentFile);
-			fileChooser.removeChoosableFileFilter(extension);
-			extension = new FileNameExtensionFilter("HTML Files", "html");
-			fileChooser.addChoosableFileFilter(extension);
-			fileChooser.showOpenDialog(null);
+			reinitFileChooser();
+			if (fileChooser.showOpenDialog(null) == 0) {
+				System.out.println(fileChooser.getSelectedFile().getName());
+			}
 			
 			
 					
-			System.out.println(newFileName);
+			//System.out.println(newFileName);
 		}
 	}
 
@@ -52,6 +46,17 @@ public class Start {
 		extension = new FileNameExtensionFilter("XML Files", "xml");
 		fileChooser.addChoosableFileFilter(extension);
 		fileChooser.setAcceptAllFileFilterUsed(false);
+	}
+
+	private void reinitFileChooser() {
+		String newFileName = currentFile.getName();
+		newFileName = newFileName.substring(0, newFileName.length() - 3) + "html";
+		currentFile = new File(newFileName);
+		fileChooser.setDialogTitle("Seve converted file");
+		fileChooser.setSelectedFile(currentFile);
+		fileChooser.removeChoosableFileFilter(extension);
+		extension = new FileNameExtensionFilter("HTML Files", "html");
+		fileChooser.addChoosableFileFilter(extension);
 	}
 
 }
