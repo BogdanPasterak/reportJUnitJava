@@ -25,9 +25,16 @@ public class Start {
 			jsonObject = ConvertXmlToJson.convert(currentFile);
 			
 			testObjectList = ConvertJsonToTestObject.convert(jsonObject);
+			
+			String html = "";
+			for(TestObject testObject : testObjectList) {
+				//fw.write(to.toString() + "\n");
+				html += ConvertTestObjectToHtml.convert(testObject);;
+			}
+			
 			reinitFileChooser();
 			if (fileChooser.showOpenDialog(null) == 0) {
-				System.out.println(fileChooser.getSelectedFile().getName());
+				System.out.println(html);
 			}
 			
 			
