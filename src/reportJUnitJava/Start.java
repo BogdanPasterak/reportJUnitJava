@@ -36,9 +36,7 @@ public class Start {
 			if (fileChooser.showOpenDialog(null) == 0) {
 				System.out.println(html);
 			}
-			
-			
-					
+						
 			//System.out.println(newFileName);
 		}
 	}
