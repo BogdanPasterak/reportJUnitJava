@@ -3,6 +3,7 @@ package reportJUnitJava;
 import java.io.*;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ public class Start {
 				//fw.write(to.toString() + "\n");
 				html += ConvertTestObjectToHtml.convert(testObject);;
 			}
+			JOptionPane.showMessageDialog(null, "infoMessage", "InfoBox: " + "titleBar", JOptionPane.INFORMATION_MESSAGE);
 			
 			reinitFileChooser();
 			if (fileChooser.showOpenDialog(null) == 0) {
