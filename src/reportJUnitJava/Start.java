@@ -32,7 +32,19 @@ public class Start {
 				//fw.write(to.toString() + "\n");
 				html += ConvertTestObjectToHtml.convert(testObject);;
 			}
-			JOptionPane.showMessageDialog(null, "infoMessage", "InfoBox: " + "titleBar", JOptionPane.INFORMATION_MESSAGE);
+			Object[] options = {"Yes, please",
+                    "No, thanks",
+                    "No eggs, no ham!"};
+			int n = JOptionPane.showOptionDialog(null,
+				    "Would you like some green eggs to go "
+				    + "with that ham?",
+				    "A Silly Question",
+				    JOptionPane.YES_NO_CANCEL_OPTION,
+				    JOptionPane.QUESTION_MESSAGE,
+				    null,
+				    options,
+				    options[2]);
+			
 			
 			reinitFileChooser();
 			if (fileChooser.showOpenDialog(null) == 0) {
