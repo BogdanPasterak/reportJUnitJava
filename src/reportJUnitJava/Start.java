@@ -32,23 +32,17 @@ public class Start {
 				//fw.write(to.toString() + "\n");
 				html += ConvertTestObjectToHtml.convert(testObject);;
 			}
-			Object[] options = {"Yes, please",
-                    "No, thanks",
-                    "No eggs, no ham!"};
-			int n = JOptionPane.showOptionDialog(null,
-				    "Would you like some green eggs to go "
-				    + "with that ham?",
-				    "A Silly Question",
-				    JOptionPane.YES_NO_CANCEL_OPTION,
-				    JOptionPane.QUESTION_MESSAGE,
-				    null,
-				    options,
-				    options[2]);
-			
-			
-			reinitFileChooser();
-			if (fileChooser.showOpenDialog(null) == 0) {
-				System.out.println(html);
+			Object[] options = {"Save & Show", "Save", "Cancel"};
+			int answer = JOptionPane.showOptionDialog(null,
+					"           Converting ready\n       What to do with data?",
+					"Test converted", JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			// save
+			if ( answer < 2) {
+				reinitFileChooser();
+				if (fileChooser.showOpenDialog(null) == 0) {
+					System.out.println(html);
+				}
 			}
 						
 			//System.out.println(newFileName);
