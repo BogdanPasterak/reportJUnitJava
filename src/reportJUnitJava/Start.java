@@ -41,7 +41,10 @@ public class Start {
 			if ( answer < 2) {
 				reinitFileChooser();
 				if (fileChooser.showOpenDialog(null) == 0) {
-					System.out.println(html);
+					System.out.println("Save!");
+					if (answer == 0) {
+						System.out.println("Show");
+					}
 				}
 			}
 						
