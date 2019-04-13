@@ -41,6 +41,13 @@ public class Start {
 			if ( answer < 2) {
 				reinitFileChooser();
 				if (fileChooser.showSaveDialog(null) == 0) {
+					try (	FileWriter fw = new FileWriter(new File(fileChooser.getSelectedFile().getName()));
+							BufferedReader rs = new BufferedReader( new FileReader("resources/start.txt"));
+							BufferedReader re = new BufferedReader( new FileReader("resources/end.txt"))){
+						
+					} catch (Exception e) {
+						System.out.println("No resource");
+					}
 					System.out.println("Save!");
 					if (answer == 0) {
 						System.out.println("Show");
