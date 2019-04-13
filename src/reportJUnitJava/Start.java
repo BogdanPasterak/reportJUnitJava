@@ -40,7 +40,7 @@ public class Start {
 			// save
 			if ( answer < 2) {
 				reinitFileChooser();
-				if (fileChooser.showOpenDialog(null) == 0) {
+				if (fileChooser.showSaveDialog(null) == 0) {
 					System.out.println("Save!");
 					if (answer == 0) {
 						System.out.println("Show");

@@ -1,0 +1,6 @@
+    <footer>
+        Copyright &copy; 2018 &nbsp; Bogdan Pasterak
+    </footer>
+    <script src="test.js"></script>
+</body>
+</html>
