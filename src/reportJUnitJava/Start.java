@@ -40,11 +40,17 @@ public class Start {
 			// save
 			if ( answer < 2) {
 				reinitFileChooser();
+				String nameFile = fileChooser.getSelectedFile().getName();
 				if (fileChooser.showSaveDialog(null) == 0) {
-					try (	FileWriter fw = new FileWriter(new File(fileChooser.getSelectedFile().getName()));
+					try (	FileWriter fw = new FileWriter(new File(nameFile));
 							BufferedReader rs = new BufferedReader( new FileReader("resources/start.txt"));
 							BufferedReader re = new BufferedReader( new FileReader("resources/end.txt"))){
-						
+						String line;
+						// read start html doc
+						while ((line = rs.readLine()) != null)
+							fw.write(line + "\n");
+						fw.write("\t<title>Test: " + nameFile + "</title>\n");
+						fw.write("</head>\n<body>\n");
 					} catch (Exception e) {
 						System.out.println("No resource");
 					}
