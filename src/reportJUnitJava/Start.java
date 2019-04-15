@@ -46,7 +46,7 @@ public class Start {
 							BufferedReader rs = new BufferedReader( new FileReader("resources/start.txt"));
 							BufferedReader re = new BufferedReader( new FileReader("resources/end.txt"))){
 						String line;
-						// read start html doc
+						// read start  html doc 
 						while ((line = rs.readLine()) != null)
 							fw.write(line + "\n");
 						fw.write("\t<title>Test: " + nameFile + "</title>\n");
